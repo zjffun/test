@@ -6,9 +6,12 @@ img{
 }
 </style>
 
-<table style="color:red">123123</table>
+<table style="color:red"><tr>123123</tr></table>
+
+<img src="https://raw.githubusercontent.com/1010543618/google-page-translation-plus/master/readme-img/Image1.png" alt="" style="border: 1px solid #000;">
 
 <p style="border: 1px solid #000;">《谷歌页面翻译增强插件》google-page-translation-plus</p>
+
 
 # 《谷歌页面翻译增强插件》google-page-translation-plus
 对谷歌的页面翻译进行增强的插件。主要功能：水平并列、垂直并列展示翻译结果，鼠标悬停展示原文或译文，通过保存翻译前的格式修正代码块显示异常，保存翻译结果等。This is a plugin that enhances Google's page translation. The main function: Display of translation results side by side or top / bottom, Original with hover translation or translation with hover original, Correct the display of code block by saving the pre-translation format, Save the translation results,etc.
