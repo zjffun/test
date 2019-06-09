@@ -208,6 +208,7 @@ __webpack_require__.r(__webpack_exports__);
 
 try{
     Object(_aaa__WEBPACK_IMPORTED_MODULE_0__["default"])()
+    document.body.innerText += 456
 }catch(e){
     document.body.innerText += e
 }

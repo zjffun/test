@@ -10,6 +10,7 @@ __webpack_require__.r(__webpack_exports__);
         zxc: 123
     }
     console.log(a, aa)
+    document.body.innerText += 789
 });
 
 
