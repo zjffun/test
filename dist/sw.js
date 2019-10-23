@@ -50,18 +50,3 @@ self.addEventListener("activate", e => {
     })
   );
 });
-
-// 请求显示通知授权
-Notification.requestPermission().then(function(result) {
-  if (result === "granted") {
-    randomNotification();
-    var notifTitle = games[randomItem].name;
-    var notifBody = 'Created by '+games[randomItem].author+'.';
-    var notifImg = 'data/img/'+games[randomItem].slug+'.jpg';
-    var options = {
-        body: notifBody,
-        icon: notifImg
-    }
-    var notif = new Notification(notifTitle, options);
-  }
-});
