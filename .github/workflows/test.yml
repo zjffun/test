@@ -1,0 +1,17 @@
+name: test CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: aquariuslt/node-browsers-github-actions@v1.0.0
+    - name: test
+      run: |
+        node -v
