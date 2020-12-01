@@ -1,0 +1,2 @@
+- `tsc`: 使用 tsconfig 的配置。
+- `tsc file`: 不会使用 tsconfig 的配置。要在命令行加上各种 Compiler Options
