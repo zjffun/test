@@ -1,0 +1,15 @@
+{
+  "name": "svgo-t",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "svgo ./repo/test.svg -o ./dist/out.svg"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "svgo": "^1.3.2"
+  }
+}

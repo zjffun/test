@@ -1,0 +1,17 @@
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>test</title>
+    <g id="" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="" transform="translate(-462.000000, -291.000000)" fill-rule="nonzero">
+            <g id="" transform="translate(410.000000, 161.000000)">
+                <g id="" transform="translate(46.000000, 124.000000)">
+                    <g id="">
+                        <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="56" height="56"></rect>
+                        <path d="M42.9432943,16.9354 L45.0567057,19.0646 L25.9147628,38.0646 C25.3664421,38.6088547 24.5027652,38.6428656 23.9150309,38.1666361 L23.8013384,38.064587 L10.9432813,25.3015632 L13.0567187,23.1723892 L24.858,34.886 L42.9432943,16.9354 Z" id="Stroke-1" fill="#333333"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
