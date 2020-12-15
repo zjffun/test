@@ -1,4 +1,5 @@
 {
+  "homepage": "/pages/src/index.html",
   "name": "react-router-t",
   "version": "0.1.0",
   "private": true,
