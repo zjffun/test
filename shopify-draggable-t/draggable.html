@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>A</li>
+        <li class="other-list">B</li>
+        <li>C</li>
+    </ul>
+    <!-- <script src="./draggable.dist.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
+    <script>
+        console.log(Draggable);
+        const draggable = new Draggable.Draggable(document.querySelectorAll('ul'), {
+            draggable: 'li',
+            plugins: [Draggable.Plugins.ResizeMirror]
+        });
+    </script>
+</body>
+
+</html>
