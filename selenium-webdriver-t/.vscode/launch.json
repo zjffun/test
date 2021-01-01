@@ -10,6 +10,13 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node"
+    },
+    {
+      "name": "chrome-config",
+      "program": "${workspaceFolder}/chrome-config.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node"
     }
   ]
 }

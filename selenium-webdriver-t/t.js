@@ -1,21 +1,33 @@
 const fs = require("fs");
-const { Builder, By, Key, until } = require("selenium-webdriver");
+const { Builder, By } = require("selenium-webdriver");
 
 (async function example() {
   let driver = await new Builder().forBrowser("chrome").build();
+
+  // 刷新页面会变回 true
+  let commandResult 
+  commandResult = await driver.sendDevToolsCommand(
+    "Page.addScriptToEvaluateOnNewDocument",
+    {
+      source: `
+        Object.defineProperty(navigator, 'webdriver', {
+          get: () => undefined
+        })
+      `,
+    }
+  );
+  console.log(commandResult);
+
   try {
-    let buff = null;
     await driver.get("http://127.0.0.1:5500/index.html");
-    // await driver.findElement(By.name("q")).sendKeys("webdriver", Key.RETURN);
-    // await driver.wait(until.titleIs("webdriver - Google Search"), 1000);
     const ele = await driver.findElement(By.className("canvas"));
 
-    // driver.executeScript("return arguments[0].toDataURL('image/png').substring(21);", canvas);
     const canvasB64 = await driver.executeScript(
       "return arguments[0].toDataURL('image/png').substring(22)",
       ele
     );
 
+    let buff = null;
     buff = Buffer.from(canvasB64, "base64");
     fs.writeFileSync("./dist/canvas.png", buff);
     const screenB64 = await driver.takeScreenshot();
