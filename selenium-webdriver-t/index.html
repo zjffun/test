@@ -14,6 +14,9 @@
         const ctx = canvasEle.getContext("2d");
         ctx.fillStyle = 'green';
         ctx.fillRect(10, 10, 150, 100);
+        canvasEle.addEventListener("click", (e) => {
+            console.log(e);
+        })
     </script>
 </body>
 
