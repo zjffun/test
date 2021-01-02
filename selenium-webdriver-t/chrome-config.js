@@ -5,6 +5,9 @@ const webdriver = require("selenium-webdriver");
   let options = new chrome.Options();
 
   options.addArguments("user-agent=test");
+  options.addArguments("window-size=1920,1080");
+  options.addArguments("force-device-scale-factor=1.5");
+  
   // options.addArguments("--headless");
   // options.addArguments("--disable-web-security");
   // options.addArguments("--disable-notifications");
