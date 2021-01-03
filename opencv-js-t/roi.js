@@ -1,18 +1,5 @@
-const Jimp = require("jimp");
 const cv = require("./opencv.js");
-
-async function imread(path) {
-  const img = await Jimp.read(path);
-  return cv.matFromImageData(img.bitmap);
-}
-
-function imshow(path, mat) {
-  new Jimp({
-    width: mat.cols,
-    height: mat.rows,
-    data: Buffer.from(mat.data),
-  }).write(path);
-}
+const { imread, imshow } = require("./utils");
 
 async function main() {
   let src = await imread("./img.jpg");

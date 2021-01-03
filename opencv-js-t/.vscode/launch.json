@@ -7,10 +7,17 @@
     {
       "type": "pwa-node",
       "request": "launch",
+      "name": "FILE",
+      "skipFiles": ["<node_internals>/**", "opencv.js"],
+      "program": "${workspaceFolder}\\${file}"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
       "name": "find-img",
       "skipFiles": ["<node_internals>/**", "opencv.js"],
       "program": "${workspaceFolder}\\find-img.js"
-    }
+    },
     {
       "type": "pwa-node",
       "request": "launch",
