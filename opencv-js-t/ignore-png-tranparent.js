@@ -15,7 +15,7 @@ async function main() {
       data = 255;
     }
 
-    templateMask.data[i] = data;
+    templateMask.data[i] = data; // alpha
     templateMask.data[i - 1] = data;
     templateMask.data[i - 2] = data;
     templateMask.data[i - 3] = data;

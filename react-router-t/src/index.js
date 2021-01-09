@@ -2,13 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./basename/App";
-import Routers from "./link-to-with-switch/routers";
+import FirstExampleBasicRouting from "./1stExampleBasicRouting";
+import SecondExampleNestedRouting from "./2ndExampleNestedRouting";
+import LinkToWithSwitchRouters from "./link-to-with-switch/routers";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
     {/* <App /> */}
-    <Routers></Routers>
+    {/* <FirstExampleBasicRouting></FirstExampleBasicRouting> */}
+    {/* <SecondExampleNestedRouting></SecondExampleNestedRouting> */}
+    <LinkToWithSwitchRouters></LinkToWithSwitchRouters>
   </React.StrictMode>,
   document.getElementById("root")
 );
