@@ -6,23 +6,37 @@ async function imread(path) {
   return cv.matFromImageData(img.bitmap);
 }
 
-function imshow(path, mat) {
-  if (mat.channels() === 1) {
-    mat = mat.clone();
-    cv.cvtColor(mat, mat, cv.COLOR_GRAY2RGBA, 0);
-    for (let i = 0; i < mat.data.length; i++) {
-      // 不然看不出差异
-      if (mat.data[i] === 1) {
-        mat.data[i] = 255;
-      }
-    }
+async function imshow(path, mat) {
+  mat = mat.clone();
+  const type = mat.type();
+  if (
+    type === cv.CV_32FC1 ||
+    type === cv.CV_32FC2 ||
+    type === cv.CV_32FC3 ||
+    type === cv.CV_32FC4
+  ) {
+    mat.convertTo(mat, cv.CV_8UC4, 255);
   }
 
-  new Jimp({
+  if (mat.channels() === 1) {
+    await cv.cvtColor(mat, mat, cv.COLOR_GRAY2RGBA, 0);
+  }
+
+  let buf = Buffer.from(mat.data);
+
+  // console.log(buf);
+  // debugger;
+
+  let jimp = new Jimp({
     width: mat.cols,
     height: mat.rows,
-    data: Buffer.from(mat.data),
-  }).write(path);
+    data: buf,
+  });
+
+  // console.log(jimp);
+  // debugger;
+
+  jimp.write(path);
 }
 
 async function drawRect(input, maxPoint, point) {

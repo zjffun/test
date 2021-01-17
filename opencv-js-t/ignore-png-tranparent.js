@@ -1,3 +1,12 @@
+process.on("unhandledRejection", (err) => {
+  debugger;
+  process.exit(1);
+});
+
+process.on("uncaughtException", (err) => {
+  debugger;
+});
+
 const cv = require("./opencv.js");
 
 const { imread, imshow, drawRect, histShow } = require("./utils");
@@ -26,26 +35,31 @@ async function main() {
     input,
     template,
     matchResultMat,
-    cv.TM_CCOEFF_NORMED,
+    // cv.TM_CCOEFF_NORMED,
+    cv.TM_SQDIFF_NORMED,
     // !!! mask will chnage to `new Mat()`
     templateMask.clone()
   );
 
+  await imshow("./dist/mask.png", templateMask);
+  await imshow("./dist/matchResult.png", matchResultMat);
+
   let result = cv.minMaxLoc(matchResultMat, mask);
-  let maxPoint = result.maxLoc;
+  // let maxPoint = result.maxLoc;
+  let maxPoint = result.minLoc;
   let point = new cv.Point(
     maxPoint.x + template.cols,
     maxPoint.y + template.rows
   );
 
-  imshow("./dist/output.png", await drawRect(input, maxPoint, point));
+  await imshow("./dist/output.png", await drawRect(input, maxPoint, point));
 
   let rect = new cv.Rect(maxPoint.x, maxPoint.y, template.cols, template.rows);
 
   let inputCrop = input.roi(rect);
   let temp = new cv.Mat();
   inputCrop.copyTo(temp);
-  imshow("./dist/input_crop.png", temp);
+  await imshow("./dist/input_crop.png", temp);
 
   let histCrop = new cv.Mat();
   let histTemplate = new cv.Mat();
@@ -77,12 +91,14 @@ async function main() {
     false
   );
 
+  await imshow("./dist/histMask.png", histMask);
   await histShow(histCrop, "hist1");
   await histShow(histTemplate, "hist2");
 
   let colorHist = cv.compareHist(histCrop, histTemplate, cv.HISTCMP_CORREL);
 
-  if (colorHist > 0.9 && result.maxVal > 0.9) {
+  // if (colorHist > 0.9 && result.maxVal > 0.9) {
+  if (colorHist > 0.9 && result.minVal < 0.1) {
     // find
     return true;
   }
