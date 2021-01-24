@@ -2,6 +2,7 @@ import * as d3 from "https://unpkg.com/d3?module";
 import data from "./tree-data.js";
 
 const width = document.body.clientWidth;
+const height = 500;
 
 const dx = 10;
 const dy = 100;
@@ -26,20 +27,31 @@ function main() {
     if (d.depth && d.data.name.length !== 7) d.children = null;
   });
 
+  // zoom
+  function zoom(e) {
+    console.log(e);
+    gRoot.attr("transform", e.transform);
+  }
+
+  const zoomListener = d3.zoom().scaleExtent([0.1, 3]).on("zoom", zoom);
+
   const svg = d3
     .create("svg")
     .attr("viewBox", [-margin.left, -margin.top, width, dx])
     .style("font", "10px sans-serif")
-    .style("user-select", "none");
+    .style("user-select", "none")
+    .call(zoomListener);
 
-  const gLink = svg
+  const gRoot = svg.append("g");
+
+  const gLink = gRoot
     .append("g")
     .attr("fill", "none")
     .attr("stroke", "#555")
     .attr("stroke-opacity", 0.4)
     .attr("stroke-width", 1.5);
 
-  const gNode = svg
+  const gNode = gRoot
     .append("g")
     .attr("cursor", "pointer")
     .attr("pointer-events", "all");
@@ -53,7 +65,7 @@ function main() {
     tree(root);
     /**
      * root:
-     * 
+     *
      * (0,0)
      * (-105,100) (-95,100) ...
      * (-150,200) (-140,200) ...
@@ -67,12 +79,14 @@ function main() {
       if (node.x > right.x) right = node;
     });
 
-    const height = right.x - left.x + margin.top + margin.bottom;
+    // Using computed height
+    // const height = right.x - left.x + margin.top + margin.bottom;
 
     const transition = svg
       .transition()
       .duration(duration)
       .attr("viewBox", [-margin.left, left.x - margin.top, width, height])
+      .style("border", "1px solid aqua")
       .tween(
         "resize",
         window.ResizeObserver ? null : () => () => svg.dispatch("toggle")
