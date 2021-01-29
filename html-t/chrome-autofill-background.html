@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 'user agent stylesheet !important' > 'author !important'  */
+        input:-internal-autofill-selected {
+            color: aqua !important;
+            background-color: transparent !important;
+        }
+
+        /* Solution: */
+        /* 
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px white inset;
+        }
+        */
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <input name="test" type="text">
+        <button>submit</button>
+    </form>
+
+</body>
+
+</html>

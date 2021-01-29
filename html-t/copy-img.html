@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .paste {
+            width: 400px;
+            height: 400px;
+            background: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <p>据说只能拷贝 png</p>
+    <input type="file" id="imgInput">
+    <button onclick="copy()">copy</button>
+    <hr>
+    <div class="paste" contenteditable>
+        粘贴测试区
+    </div>
+    <script>
+        function copy() {
+            console.log(imgInput.files[0]);
+            navigator.clipboard.write([new ClipboardItem({
+                'image/png': imgInput.files[0]
+            })])
+        }
+    </script>
+
+</body>
+
+</html>
