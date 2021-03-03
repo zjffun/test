@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 
+        If the origin of script is different from the location origin, 
+        the error throwing from this script caught by window 
+        will `Script error.` by default.
+
+        If you want to get the detail error info of cross site script,
+        you need add the crossorigin attribute..
+    -->
+    <script src="http://127.0.0.1:8000/catch.js"></script>
+    <script src="http://127.0.0.1:8001/catch.js"></script>
+    <script>
+        window.addEventListener('error', function (e) {
+            console.log('index.html', e);
+        });
+    </script>
+    <script src="http://127.0.0.1:8000/test.js"></script>
+    <script src="http://127.0.0.1:8000/test.js" crossorigin=""></script>
+    <script src="http://127.0.0.1:8001/test.js"></script>
+    <script src="http://127.0.0.1:8001/test.js" crossorigin=""></script>
+</body>
+
+</html>

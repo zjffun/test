@@ -1,0 +1,14 @@
+{
+  "name": "script-crossorigin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "catch.js",
+  "scripts": {
+    "start0": "http-server ./ --cors -p 8000",
+    "start1": "http-server ./ --cors -p 8001",
+    "start2": "http-server ./ --cors -p 8002"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
