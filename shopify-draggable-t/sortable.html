@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h1>group 1</h1>
+    <ul class="content1">
+      <li class="sortable-element1">sortable element</li>
+      <li class="sortable-element1">can be droped</li>
+      <li>can't be dropped</li>
+      <li>can't be dropped</li>
+      <li>can't be dropped</li>
+      <li class="sortable-element1">can be droped</li>
+      <li>can't be dropped</li>
+      <li>can't be dropped</li>
+      <li>
+        <h1>group 2</h1>
+        <ul class="content2">
+          <li class="sortable-element2">sortable element</li>
+          <li class="sortable-element2">can be droped</li>
+          <li>can't be dropped</li>
+          <li>can't be dropped</li>
+          <li>can't be dropped</li>
+          <li class="sortable-element2">can be droped</li>
+          <li>can't be dropped</li>
+          <li>can't be dropped</li>
+        </ul>
+      </li>
+    </ul>
+
+    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.12/lib/draggable.bundle.js"></script>
+    <script>
+      const sortable1 = new Draggable.Sortable(
+        document.querySelectorAll(".content1"),
+        {
+          draggable: ".sortable-element1",
+        }
+      );
+
+      const sortable2 = new Draggable.Sortable(
+        document.querySelectorAll(".content2"),
+        {
+          draggable: ".sortable-element2",
+        }
+      );
+    </script>
+  </body>
+</html>

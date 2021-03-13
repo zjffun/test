@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <video id="video"></video>
+    <script>
+      async function main() {
+        var constraints = {
+          audio: true,
+          video: { width: 1280, height: 720 },
+        };
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        console.log(stream);
+        // const src = window.URL.createObjectURL(stream);
+        // console.log(src);
+        // video.src = src;
+        video.srcObject = stream;
+      }
+
+      main();
+    </script>
+  </body>
+</html>
