@@ -1,0 +1,7 @@
+curl --location --request POST 'http://localhost:3000/proxy' \
+--header 'Content-Type: text/plain' \
+--data-raw 'test'
+
+curl --location --request POST 'http://localhost:3000/proxy' \
+--header 'Content-Type: application/json' \
+--data-raw '{"test": 1}'
