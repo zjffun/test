@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .item {
+        width: 200px;
+        margin-bottom: 10px;
+        border: 1px solid violet;
+      }
+      .item--empty {
+        border-style: dotted;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <ul>
+        <li class="item">A</li>
+        <li class="item">B</li>
+        <li class="item">C</li>
+      </ul>
+      <p>drop area:</p>
+      <ul>
+        <li class="item item--empty"></li>
+        <li class="item item--empty"></li>
+        <li class="item item--empty"></li>
+      </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.12/lib/draggable.bundle.js"></script>
+    <script>
+      const swappable = new Draggable.Swappable(
+        document.querySelectorAll(".container"),
+        {
+          draggable: ".item",
+        }
+      );
+    </script>
+  </body>
+</html>
