@@ -15,22 +15,28 @@ const server = http.createServer(function (req, res) {
   }
 
   if (req.url === "/post-body") {
-    // req.on('data', (d) => {
-    //     console.log('data1', d);
-    // })
+    // req.on("data", (d) => {
+    //   console.log("data1", d);
+    // });
+    // req.on("data", (d) => {
+    //   console.log("data2", d);
+    // });
     req.on("end", () => {
-      console.log("end");
+      console.log("end1");
     });
+    // req.on("end", () => {
+    //   console.log("end2");
+    // });
     setTimeout(() => {
       /**
        * if no `req.on('data')` before, data will consume here.
        */
       req.on("data", (d) => {
-        console.log("data2", d);
+        console.log("setTimeout data", d);
       });
-      // req.on('end', () => {
-      //     console.log('end2');
-      // })
+      req.on("end", () => {
+        console.log("setTimeout end");
+      });
     }, 1000);
   }
 });
