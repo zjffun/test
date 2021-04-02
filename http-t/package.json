@@ -4,7 +4,8 @@
   "description": "",
   "main": "body.js",
   "scripts": {
-    "body": "nodemon post-body.js"
+    "body": "nodemon post-body.js",
+    "cache": "nodemon cache.js"
   },
   "keywords": [],
   "author": "",
