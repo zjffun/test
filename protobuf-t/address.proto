@@ -1,0 +1,6 @@
+message Address
+{
+    required string province  = 1;
+    required string city = 2;
+    required string county = 3;
+}

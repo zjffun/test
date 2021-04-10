@@ -1,0 +1,19 @@
+{
+  "name": "protobuf-t",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:protoc": "sudo protoc --js_out=import_style=commonjs,binary:. address.proto address2.proto",
+    "build:browserify": "browserify exports.js -o  address_main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "google-protobuf": "^3.15.8",
+    "require": "^2.4.20"
+  }
+}
