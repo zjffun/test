@@ -6,6 +6,10 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use('/nest-proxy', (req, res, next) => {
+    next();
+  });
+
   app.use('/proxy', (req, res, next) => {
     setTimeout(() => {
       req.headers.test = 'foo';

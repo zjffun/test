@@ -8,6 +8,7 @@ export class ProxyTargetController {
       if (req.readableEnded) {
         resolve(
           JSON.stringify({
+            header: req.headers.test,
             body,
           }),
         );
@@ -20,7 +21,10 @@ export class ProxyTargetController {
       });
 
       req.on('end', () => {
-        resolve({ body: data.toString() });
+        resolve({
+          header: req.headers.test,
+          body: data.toString(),
+        });
       });
     });
   }
