@@ -1,0 +1,25 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "<img src=\"./icon128.png\" height=\"30\">",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zjffun/test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zjffun/test/issues"
+  },
+  "homepage": "https://github.com/zjffun/test#readme",
+  "dependencies": {
+    "angular": "^1.8.2",
+    "react": "^17.0.2",
+    "vue": "^2.6.14"
+  }
+}

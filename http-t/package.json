@@ -5,7 +5,9 @@
   "main": "body.js",
   "scripts": {
     "body": "nodemon post-body.js",
-    "cache": "nodemon cache.js"
+    "cache": "nodemon cache.js",
+    "set-cookie": "nodemon set-cookie.js",
+    "keep-alive": "nodemon keep-alive.js"
   },
   "keywords": [],
   "author": "",
