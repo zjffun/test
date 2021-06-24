@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "declaration": true
+  },
+  "files": ["index.ts"],
+  "include": ["types.d.ts"]
+}

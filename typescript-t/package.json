@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "rm -rf tsc/dist && tsc --project tsc"
   },
   "keywords": [],
   "author": "",
