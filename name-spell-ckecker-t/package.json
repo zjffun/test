@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:mjs": "node test.mjs",
+    "test": "node test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "name-spell-checker": "../../name-spell-checker",
+    "name-dic": "^0.0.2",
+    "name-spell-checker": "0.0.1",
     "nspell": "^2.1.5"
   }
 }

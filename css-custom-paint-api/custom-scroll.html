@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .custom-scroll {
+        --scroll-top: 0;
+        --client-height: 0;
+        --scroll-height: 0;
+        background-image: paint(custom-scroll);
+        overflow: scroll;
+        padding-left: 20px;
+      }
+      .container {
+        height: 300px;
+      }
+      .content {
+        width: 300px;
+        height: 2000px;
+        background: linear-gradient(white, black);
+      }
+    </style>
+    <div class="custom-scroll container">
+      <div class="content"></div>
+    </div>
+    <script>
+      CSS.paintWorklet.addModule("custom-scroll.js");
+
+      function setCSS(dom) {
+        dom.style.cssText = `
+          --scroll-top: ${dom.scrollTop};
+          --client-height: ${dom.clientHeight};
+          --scroll-height: ${dom.scrollHeight};
+        `;
+      }
+
+      const cs = document.querySelector(".custom-scroll");
+
+      setCSS(cs);
+
+      cs.addEventListener("scroll", function (e) {
+        setCSS(e.target);
+      });
+    </script>
+  </body>
+</html>
