@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Mobx</h1>
+    <script type="module">
+      import {
+        makeAutoObservable,
+        autorun,
+      } from "./node_modules/mobx/dist/mobx.esm.production.min.js";
+      class Timer {
+        secondsPassed = 0;
+
+        constructor() {
+          makeAutoObservable(this);
+        }
+
+        increase() {
+          this.secondsPassed += 1;
+        }
+
+        reset() {
+          this.secondsPassed = 0;
+        }
+      }
+
+      const myTimer = new Timer();
+
+      autorun(() => {
+        console.log("mobx listener", {
+          secondsPassed: myTimer.secondsPassed,
+        });
+      });
+
+      myTimer.increase();
+      myTimer.increase();
+      myTimer.increase();
+    </script>
+
+    <h1>Redux</h1>
+    <script type="module">
+      import { createStore } from "./node_modules/redux/es/redux.mjs";
+
+      function todos(state = [], action) {
+        switch (action.type) {
+          case "ADD_TODO":
+            return state.concat([action.text]);
+          default:
+            return state;
+        }
+      }
+
+      const store = createStore(todos, ["Use Redux"]);
+
+      function addTodo(text) {
+        return {
+          type: "ADD_TODO",
+          text,
+        };
+      }
+
+      let currentValue;
+      function handleChange() {
+        let previousValue = currentValue;
+        currentValue = store.getState();
+
+        if (previousValue !== currentValue) {
+          console.log(
+            "Some deep nested property changed from",
+            previousValue,
+            "to",
+            currentValue
+          );
+        }
+      }
+
+      const unsubscribe = store.subscribe(handleChange);
+
+      store.dispatch(addTodo("Read the docs"));
+      store.dispatch(addTodo("Read about the middleware"));
+      unsubscribe();
+    </script>
+
+    <h1>RxJS</h1>
+
+    <!-- not support now -->
+    <!-- <script type="importmap">
+      {
+        "imports": {
+          "rxjs": "./node_modules/rxjs/dist/esm5/index.js"
+        }
+      }
+    </script> -->
+    <script src="./node_modules/rxjs/dist/bundles/rxjs.umd.js"></script>
+    <script type="module">
+      const { Observable, Subject } = rxjs;
+
+      const subject = new Subject();
+
+      subject.next("1");
+
+      subject.subscribe((...params) => {
+        console.log("subscribe", params);
+      });
+
+      subject.next("2");
+      subject.next("3");
+
+      const observable = new Observable((subscriber) => {
+        subscriber.next(1);
+        subscriber.next(2);
+        subscriber.next(3);
+        setTimeout(() => {
+          subscriber.next(4);
+          subscriber.complete();
+        }, 1000);
+      });
+
+      console.log("just before subscribe");
+      observable.subscribe({
+        next(x) {
+          console.log("got value " + x);
+        },
+        error(err) {
+          console.error("something wrong occurred: " + err);
+        },
+        complete() {
+          console.log("done");
+        },
+      });
+      console.log("just after subscribe");
+    </script>
+  </body>
+</html>

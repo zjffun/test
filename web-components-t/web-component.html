@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <w-render>
+      <template slot="render">
+        <script>
+          console.log(123);
+          init(function () {
+            const state = { showing: false };
+
+            class WShow extends HTMLElement {
+              static get observedAttributes() {
+                return ["show"];
+              }
+
+              setSlot(el, show) {
+                console.log(el);
+                el.style.display = show === "true" ? "" : "none";
+              }
+
+              constructor() {
+                // Always call super first in constructor
+                super();
+                var shadow = this.attachShadow({ mode: "open" });
+
+                const slotEl = document.createElement("slot");
+
+                shadow.appendChild(slotEl);
+
+                this.setSlot(slotEl);
+              }
+
+              connectedCallback() {
+                console.log("Custom square element added to page.");
+              }
+
+              attributeChangedCallback(name, oldValue, newValue) {
+                console.log("Custom square element attributes changed.", {
+                  name,
+                  oldValue,
+                  newValue,
+                });
+                this.setSlot(this.shadowRoot.firstElementChild, newValue);
+              }
+
+              adoptedCallback() {
+                console.log("Custom square element moved to new page.");
+              }
+
+              disconnectedCallback() {
+                console.log("Custom square element removed from page.");
+              }
+            }
+
+            customElements.define("w-show", WShow);
+
+            function toggle() {
+              state.showing = !state.showing;
+            }
+
+            return {
+              showing,
+              toggle,
+            };
+          });
+        </script>
+      </template>
+
+      <w-show :show="showing"> show </w-show>
+      <button @click="toggle">toggle</button>
+    </w-render>
+
+    <script>
+      let datas = {};
+
+      function init(fn) {
+        datas = fn();
+      }
+
+      function bindData(el, name, value) {
+        datas[value].
+      }
+
+      function bindEvent() {}
+      class WRender extends HTMLElement {
+        static get observedAttributes() {
+          return ["show"];
+        }
+
+        constructor() {
+          // Always call super first in constructor
+          super();
+          var shadow = this.attachShadow({ mode: "open" });
+
+          const slotEl = document.createElement("slot");
+
+          shadow.appendChild(slotEl);
+
+          [...this.children].forEach((el) => {
+            [...el.attributes].forEach((attr) => {
+              const { name, value } = attr;
+              if (name.startsWith(":")) {
+                bindData(el, name.substring(1), value);
+                return;
+              }
+              if (name.startsWith("@")) {
+                bindEvent(el, name.substring(1), value);
+              }
+            });
+          });
+        }
+      }
+
+      customElements.define("w-render", WRender);
+    </script>
+  </body>
+</html>

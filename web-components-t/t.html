@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .active {
+        border: 1px solid violet;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="test"
+      :text="text"
+      :class="myclass"
+      @click="onclick"
+      :style="style"
+    ></div>
+    <w-if id="show" :cond="show">
+      <ul>
+        <w-for id="list" :data="data" item="item">
+          <li :key="item" :text="item"></li>
+        </w-for>
+      </ul>
+
+      <div slot="else">hide</div>
+    </w-if>
+
+    <script>
+      //       function isPrimitive(test) {
+      //         return test !== Object(test);
+      //       }
+
+      const symbol = Symbol("tag");
+      let currentEl = document.getElementById("test");
+      let currentAttr;
+      let newData;
+
+      const listenersMap = new Map();
+      const propTagsMap = new Map();
+
+      //       const diffArray = (arr1, arr2) => {
+      //         let res = [];
+      //         let sj = 0;
+      //         for (let i = 0; i < arr1.length; i++) {
+      //           const element1 = arr1[i];
+      //           let find = false;
+      //           for (let j = sj; j < arr2.length; j++) {
+      //             const element2 = arr2[j];
+      //             if (element1 === element2) {
+      //               res.push([i, j]);
+      //               find = true;
+      //               sj = j + 1;
+      //               break;
+      //             }
+      //           }
+      //           if (!find) {
+      //             res.push([i, -1]);
+      //           }
+      //         }
+      //       };
+
+      const reactData = (data) => {
+        return new Proxy(data, {
+          get: function (target, prop, receiver) {
+            console.log(target, prop, receiver);
+
+            if (!currentAttr) {
+              return Reflect.get(...arguments);
+            }
+
+            let propTags = propTagsMap.get(target);
+            if (!propTags) {
+              propTags = new Map();
+              propTagsMap.set(target, propTags);
+            }
+
+            let listeners = listenersMap.get(target);
+            if (!listeners) {
+              listeners = new Map();
+              listenersMap.set(target, listeners);
+            }
+
+            let proptag = propTags.get(prop);
+            if (!proptag) {
+              proptag = 0;
+              propTags.set(prop, proptag);
+            }
+
+            let proplisteners = listeners.get(prop);
+            if (!proplisteners) {
+              proplisteners = [];
+              listeners.set(prop, proplisteners);
+            }
+
+            proplisteners.push(
+              (() => {
+                const el = currentEl;
+                const attr = currentAttr;
+                return (newData, tag) => {
+                  console.log(el, newData, tag);
+
+                  if (attr === "text") {
+                    el.innerText = newData;
+                    return;
+                  }
+
+                  if (attr === "onclick") {
+                    el.addEventListener("click", newData);
+                    return;
+                  }
+                  el.setAttribute(attr, newData[symbol] || newData);
+                };
+              })()
+            );
+
+            return Reflect.get(...arguments);
+          },
+          set: function (target, prop, receiver) {
+            console.log(target, prop, receiver);
+            const listeners = listenersMap.get(target).get(prop);
+            const propsTags = propTagsMap.get(target);
+
+            newData = receiver;
+
+            let tag = propsTags.get(prop) + 1;
+            propsTags.set(prop, tag);
+            //     if (!isPrimitive(receiver)) {
+            //     }
+            //     setTimeout(() => {
+            listeners.forEach((l) => l(receiver, tag));
+            //     });
+
+            return Reflect.set(...arguments);
+          },
+        });
+      };
+
+      const state = reactData({
+        form: "form",
+        data: [],
+      });
+
+      class WFor extends HTMLElement {
+        static get observedAttributes() {
+          return ["data"];
+        }
+
+        constructor() {
+          // Always call super first in constructor
+          super();
+          var shadow = this.attachShadow({ mode: "open" });
+
+          this.setItems();
+        }
+
+        setItems() {
+          const shadow = this.shadowRoot;
+          const oldData = state[this.getAttribute(":data")];
+
+          //   diffArray(oldData, newData);
+          if (newData) {
+            shadow.innerHTML = "";
+            for (const data of newData) {
+              const item = this.children[0].cloneNode(true);
+              item.innerText = data;
+              shadow.appendChild(item);
+            }
+          }
+        }
+
+        connectedCallback() {
+          console.log("Custom square element added to page.");
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+          console.log("Custom square element attributes changed.", {
+            name,
+            oldValue,
+            newValue,
+          });
+          this.setItems();
+        }
+
+        adoptedCallback() {
+          console.log("Custom square element moved to new page.");
+        }
+
+        disconnectedCallback() {
+          console.log("Custom square element removed from page.");
+        }
+      }
+
+      customElements.define("w-for", WFor);
+
+      class WIf extends HTMLElement {
+        static get observedAttributes() {
+          return ["cond"];
+        }
+
+        constructor() {
+          // Always call super first in constructor
+          super();
+          var shadow = this.attachShadow({ mode: "open" });
+
+          this.setSlot();
+        }
+
+        setSlot() {
+          console.log("wif");
+          const shadow = this.shadowRoot;
+          const element = document.createElement("slot");
+
+          shadow.innerHTML = "";
+          if (!newData) {
+            element.name = "else";
+          }
+          shadow.appendChild(element);
+        }
+
+        connectedCallback() {
+          console.log("Custom square element added to page.");
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+          console.log("Custom square element attributes changed.", {
+            name,
+            oldValue,
+            newValue,
+          });
+          this.setSlot();
+        }
+
+        adoptedCallback() {
+          console.log("Custom square element moved to new page.");
+        }
+
+        disconnectedCallback() {
+          console.log("Custom square element removed from page.");
+        }
+      }
+
+      customElements.define("w-if", WIf);
+
+      //       currentAttr = "prop";
+      //       state.form;
+      //       currentAttr = "text";
+      //       state.text;
+      //       currentAttr = "class";
+      //       state.myclass;
+      //       currentAttr = "style";
+      //       state.style;
+      //       currentAttr = "onclick";
+      //       state.onclick;
+      //       currentAttr = "";
+
+      //       //       state.form = "123";
+      //       //       state.form = "456";
+      //       //       state.form = {};
+
+      //       state.text = "123";
+      //       state.myclass = "active";
+      //       state.style = "background: #777";
+      //       state.onclick = (...args) => {
+      //         state.myclass = state.myclass === "" ? "active" : "";
+      //         console.log(args);
+      //       };
+
+      //       state.text = "444";
+
+      currentEl = document.getElementById("list");
+      currentAttr = "data";
+      state.data;
+
+      state.data = [[1, 2, 3], [1, 2], { test: 1 }];
+      currentEl = document.getElementById("show");
+      currentAttr = "cond";
+      state.cond;
+
+      state.cond = true;
+
+      currentAttr = "";
+    </script>
+  </body>
+</html>

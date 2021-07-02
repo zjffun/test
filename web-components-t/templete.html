@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="id1"></div>
+    <w-template template="t1"></w-template>
+
+    <w-template template="t1"></w-template>
+
+    <w-template template="t2"></w-template>
+
+    <template name="t1">
+      <div id="id1"></div>
+      <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+      <script>
+        $("#id1").html("bar");
+      </script>
+    </template>
+
+    <template name="t2">
+      <div id="id1"></div>
+      <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+      <script>
+        $("#id1").html("foo");
+      </script>
+    </template>
+
+    <script>
+      class WTemplate extends HTMLElement {
+        static get observedAttributes() {
+          return ["template"];
+        }
+
+        setIframe(shadow) {
+          const templateEl = document.querySelector(
+            `[name='${this.getAttribute("template")}']`
+          );
+
+          const iframeEl = document.createElement("iframe");
+
+          iframeEl.srcdoc = templateEl.innerHTML;
+
+          shadow.innerHTML = "";
+
+          shadow.appendChild(iframeEl);
+        }
+
+        constructor() {
+          // Always call super first in constructor
+          super();
+          var shadow = this.attachShadow({ mode: "open" });
+          this.setIframe(shadow);
+        }
+
+        connectedCallback() {
+          console.log("Custom square element added to page.");
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+          console.log("Custom square element attributes changed.", {
+            name,
+            oldValue,
+            newValue,
+          });
+          this.setIframe(this.shadowRoot);
+        }
+
+        adoptedCallback() {
+          console.log("Custom square element moved to new page.");
+        }
+
+        disconnectedCallback() {
+          console.log("Custom square element removed from page.");
+        }
+      }
+
+      customElements.define("w-template", WTemplate);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<script type="module">
+  import { html, define } from "https://unpkg.com/hybrids@^5";
+
+  function increaseCount(host) {
+    host.count += 1;
+  }
+
+  const SimpleCounter = {
+    count: 0,
+    render: ({ count }) => html`
+      <p>test</p>
+      <button onclick="${increaseCount}">Count: ${count}</button>
+    `,
+  };
+
+  define("simple-counter", SimpleCounter);
+
+  const SimpleSlot = {
+    show: "false",
+    render: ({ show }) =>
+      // seems a bug
+      html`<div ${show === "false" ? "hidden" : ""}><slot></slot></div>`,
+  };
+
+  define("simple-counter", SimpleCounter);
+  define("simple-slot", SimpleSlot);
+</script>
+
+<simple-counter count="10"></simple-counter>
+
+<simple-slot show="false">
+  <div>test</div>
+  <!-- can't change by setAttribute -->
+  <button onclick="event.target.parentNode.setAttribute('show', 'false')">
+    hide
+  </button>
+</simple-slot>
