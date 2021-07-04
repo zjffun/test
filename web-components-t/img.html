@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <w-img
+      src="https://developer.mozilla.org/favicon-48x48.97046865.png"
+    ></w-img>
+    <script>
+      // Create a class for the element
+      class WImage extends HTMLElement {
+        constructor() {
+          // Always call super first in constructor
+          super();
+          var img1 = new Image(); // Image constructor
+          [...this.attributes].forEach(({ name, value }) => {
+            img1[name] = value;
+          });
+
+          this.appendChild(img1);
+        }
+      }
+
+      customElements.define("w-img", WImage);
+    </script>
+  </body>
+</html>
