@@ -8,24 +8,35 @@
   </head>
   <body>
     <w-img
+      id="myimg"
       src="https://developer.mozilla.org/favicon-48x48.97046865.png"
+      :src="mysrc"
     ></w-img>
+
+    <script src="./WHTMLElement.js"></script>
+
     <script>
       // Create a class for the element
-      class WImage extends HTMLElement {
+      class WImage extends WHTMLElement {
         constructor() {
           // Always call super first in constructor
           super();
-          var img1 = new Image(); // Image constructor
-          [...this.attributes].forEach(({ name, value }) => {
-            img1[name] = value;
-          });
+          var img1 = document.createElement("img"); // Image constructor
 
-          this.appendChild(img1);
+          this.initDom(img1);
         }
       }
 
       customElements.define("w-img", WImage);
+
+      setTimeout(() => {
+        document
+          .querySelector("w-img")
+          .wSetData(
+            "mysrc",
+            "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
+          );
+      }, 2000);
     </script>
   </body>
 </html>

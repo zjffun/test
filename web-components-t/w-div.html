@@ -1,171 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        w-div {
-            display: block;
-        }
+      w-div {
+        display: block;
+      }
 
-        .div-1 {
-            border: 10px solid #000;
-            background: gray;
-        }
+      .div-1 {
+        border: 10px solid #000;
+        background: gray;
+      }
 
-        .div-2 {
-            color: violet;
-        }
-        .divstyle{
-            transform: skew(20deg);
-        }
+      .div-2 {
+        color: violet;
+      }
 
-        body>div {
-            border: 1px solid aqua;
-        }
+      .divclass {
+        transform: skew(-20deg);
+      }
 
-        body>w-div {
-            border: 1px solid aqua;
-        }
+      .divstyle {
+        transform: skew(20deg);
+      }
+
+      body > div {
+        border: 1px solid aqua;
+      }
+
+      body > w-div {
+        border: 1px solid aqua;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <script>
-        function eat(e) {
-            console.log(e);
-        }
+      function eat(e) {
+        console.log(e);
+      }
     </script>
-    <w-div :hidden="showdiv" class="div-1" :class="div-2" onclick="eat()" @click="poo" draggable="true">
+    <w-div
+      :hidden="hiddendiv"
+      class="div-1"
+      :class="div-2"
+      onclick="eat()"
+      @click="poo"
+      draggable="true"
+    >
+      <template defaultData>
         <script>
-            var foo = 1, bar = 2, tee = 3, love = 4;
+          ({
+            hiddendiv: false,
+            "div-2": "divclass",
+          });
         </script>
+      </template>
+      <template events>
+        <script>
+          ({
+            poo() {
+              console.log("shit");
+              this.wSetData("div-2", "divstyle");
+            },
+          });
+        </script>
+      </template>
 
-        111 {foo}
-        <div> 111 {tee} </div>
+      111 {foo}
+      <div>111 {tee}</div>
 
-        <w-comp>
-            {love}
-        </w-comp>
+      <w-comp> {l} </w-comp>
 
-        {bar}
+      {bar}
     </w-div>
     <!-- <div  :hidden="showdiv" class="div-1" :class="div-2" click="eat()" @click="poo" draggable="true"> 111</div> -->
 
     <script src="https://cdn.jsdelivr.net/npm/rxjs@7.1.0/dist/bundles/rxjs.umd.min.js"></script>
     <script>
+      const subject = new rxjs.Subject();
+      const keyAttrMap = new Map();
+      const currentEl = document.querySelector("w-div");
 
-        const subject = new rxjs.Subject();
-        const keyAttrMap = new Map();
-        const currentEl = document.querySelector("w-div");
+      subject.subscribe((param) => {
+        console.log("subscribe", param);
 
-        subject.subscribe((param) => {
-            console.log("subscribe", param);
+        const attr = keyAttrMap.get(param.key);
+        currentEl.wSetAttribute(attr, param.data);
+      });
 
-            const attr = keyAttrMap.get(param.key);
-            currentEl.wSetAttribute(attr, param.data);
+      function subscribe(attr, key) {
+        keyAttrMap.set(key, attr);
+      }
+
+      const reactData = (data) => {
+        return new Proxy(data, {
+          get: function (target, prop, receiver) {
+            console.log(target, prop, receiver);
+
+            if (!currentAttr) {
+              return Reflect.get(...arguments);
+            }
+
+            subscribe(currentAttr, prop);
+
+            return Reflect.get(...arguments);
+          },
+          set: function (target, prop, receiver) {
+            console.log(target, prop, receiver);
+
+            subject.next({ key: prop, data: receiver });
+
+            return Reflect.set(...arguments);
+          },
         });
+      };
 
-        function subscribe(attr, key) {
-            keyAttrMap.set(key, attr);
-        }
+      const state = reactData({
+        form: "form",
+        data: [],
+      });
+    </script>
 
-        const reactData = (data) => {
-            return new Proxy(data, {
-                get: function (target, prop, receiver) {
-                    console.log(target, prop, receiver);
-
-                    if (!currentAttr) {
-                        return Reflect.get(...arguments);
-                    }
-
-                    subscribe(currentAttr, prop)
-
-                    return Reflect.get(...arguments);
-                },
-                set: function (target, prop, receiver) {
-                    console.log(target, prop, receiver);
-
-                    subject.next({ key: prop, data: receiver });
-
-                    return Reflect.set(...arguments);
-                },
-            });
+    <script>
+      function getEvent() {
+        return (event) => {
+          console.log(event);
+          state["div-2"] = "divstyle";
         };
-
-        const state = reactData({
-            form: "form",
-            data: [],
-        });
+      }
     </script>
+
+    <script src="./WHTMLElement.js"></script>
 
     <script>
-        function getEvent() {
-            return (event) => {
-                console.log(event);
-                state['div-2'] = "divstyle";
-            }
+      class WDiv extends WHTMLElement {
+        constructor() {
+          // Always call super first in constructor
+          super();
+
+          const divEl = document.createElement("div");
+
+          this.initDom(divEl);
         }
+      }
+
+      customElements.define("w-div", WDiv);
     </script>
-
-    <script>
-        class WDiv extends HTMLElement {
-            constructor() {
-                // Always call super first in constructor
-                super();
-                const divEl = document.createElement('div');
-                this.defaultValue = {};
-
-                [...this.attributes].forEach(({ name, value }) => {
-                    this.defaultValue[name] = value;
-
-                    if (name.startsWith(":")) {
-                        subscribe(name.substring(1), value);
-                        return;
-                    }
-                    if (name.startsWith("@")) {
-                        divEl.addEventListener('click', getEvent(value))
-                        return;
-                    }
-
-                    divEl.setAttribute(name, value);
-                });
-
-                [...this.childNodes].forEach(el => {
-                    divEl.appendChild(el);
-                });
-
-                [...this.attributes].forEach(({ name, value }) => {
-                    if (name.startsWith(":")) {
-                        return;
-                    }
-                    if (name.startsWith("@")) {
-                        return;
-                    }
-                    this.removeAttribute(name);
-                });
-
-                this.appendChild(divEl);
-            }
-
-            wSetAttribute(attr, value) {
-                if (attr === "class") {
-                    this.children[0].setAttribute("class", this.defaultValue.class + ' ' + value)
-                    return;
-                } else if (attr === "style") {
-                    this.children[0].setAttribute("style", this.defaultValue.style + ' ' + value)
-                    return;
-                }
-
-                this.children[0].setAttribute(attr, JSON.stringify(value));
-            }
-        }
-
-        customElements.define("w-div", WDiv);
-    </script>
-</body>
-
+  </body>
 </html>

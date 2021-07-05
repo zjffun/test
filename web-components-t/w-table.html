@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      w-table,
+      w-tr,
+      w-td {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <w-table>
+      <w-tr>
+        <w-td colspan="2">1 </w-td>
+        <w-td>2 </w-td>
+        <w-td>3 </w-td>
+        <w-td>4 </w-td>
+      </w-tr>
+      <w-tr>
+        <w-td>2 </w-td>
+        <w-td>2 </w-td>
+        <w-td>3 </w-td>
+        <w-td>4 </w-td>
+      </w-tr>
+    </w-table>
+
+    <table>
+      <tr>
+        <td colspan="2">1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+      </tr>
+    </table>
+
+    <script src="./WHTMLElement.js"></script>
+    <script>
+      class WTable extends WHTMLElement {
+        constructor() {
+          super();
+          var el = document.createElement("table");
+
+          this.initDom(el);
+        }
+      }
+      class WTr extends WHTMLElement {
+        constructor() {
+          super();
+          var el = document.createElement("tr");
+
+          this.initDom(el);
+        }
+      }
+      class WTd extends WHTMLElement {
+        constructor() {
+          super();
+          var el = document.createElement("td");
+
+          this.initDom(el);
+        }
+      }
+
+      customElements.define("w-table", WTable);
+      customElements.define("w-tr", WTr);
+      customElements.define("w-td", WTd);
+    </script>
+  </body>
+</html>
