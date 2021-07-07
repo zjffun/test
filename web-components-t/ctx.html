@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        w-comp1,
+        w-comp2 {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <w-comp2 t="ctx1">
+        1
+        <w-comp1 t="ctx1-1">11</w-comp1>
+    </w-comp2>
+
+    <w-comp1 t="ctx2">2
+        <div>
+            <div>test
+                <li>
+                    <ul>test
+                        <w-comp2 t="ctx2-1">21
+                            <w-comp1 t="ctx2-2">22</w-comp1>
+                        </w-comp2>
+                    </ul>
+                </li>
+            </div>
+        </div>
+        <w-comp1 t="ctx2-1">21
+            <div>
+
+                <body>
+                    <html>haha
+                    <test>
+                        <ww-aa>
+                            <w-comp1 t="ctx2-2">22
+                                <div>
+                                    <div>test
+                                        <li>
+                                            <ul>test
+                                                <w-comp2 t="ctx2-3">23
+                                                    <w-comp1 t="ctx2-4">24</w-comp1>
+                                                </w-comp2>
+                                            </ul>
+                                        </li>
+                                    </div>
+                                </div>
+                            </w-comp1>
+                        </ww-aa>
+                    </test>
+
+                    </html>
+                </body>
+            </div>
+        </w-comp1>
+    </w-comp1>
+    <script>
+        const el1 = document.createElement("w-comp1");
+        console.log(el1);
+
+        class WHTMLElement extends HTMLElement {
+            static context = new Set();
+
+            // contextReady;
+            // contextParent;
+            // contextChildren;
+
+            connectedCallback() {
+                let parent = this.parentElement;
+                while (parent) {
+                    if (parent === document.body) {
+                        WHTMLElement.context.add(this);
+                        this.prepareContext();
+
+                        break;
+                    }
+                    if (parent.tagName.toLocaleLowerCase().startsWith('w-')) {
+                        if (!parent.contextChildren) {
+                            parent.contextChildren = [];
+                        }
+                        parent.contextChildren.push(this);
+                        this.contextParent = parent;
+                        if (parent.contextReady) {
+                            this.prepareContext();
+                        }
+                        break;
+                    }
+                    parent = parent.parentElement;
+                }
+            }
+            prepareContext() {
+                // ...
+                this.contextReady = true;
+
+                console.log(this.getAttribute("t"))
+
+                // children read context
+                this.contextChildren?.forEach?.(el => el.prepareContext())
+            }
+
+            static getContext() {
+                const result = [];
+                function getTree(el) {
+                    const children = [];
+                    if (el.contextChildren) {
+                        el.contextChildren.forEach(el1 => {
+                            children.push(getTree(el1));
+                        })
+                    }
+                    return { node: el, children }
+                }
+                [...WHTMLElement.context].forEach(el => {
+                    result.push(getTree(el))
+                });
+                return result;
+            }
+        }
+
+        customElements.define(
+            "w-comp1",
+            class extends WHTMLElement {
+                constructor() {
+                    super();
+                    console.log('w-comp1 constructor');
+                }
+                connectedCallback() {
+                    super.connectedCallback();
+                    console.log("w-comp1 Custom square element added to page.");
+                }
+
+                disconnectedCallback() {
+                    console.log("w-comp1 Custom square element removed from page.");
+                }
+
+                adoptedCallback() {
+                    console.log("w-comp1 Custom square element moved to new page.");
+                }
+
+                attributeChangedCallback(name, oldValue, newValue) {
+                    console.log("w-comp1 Custom square element attributes changed.");
+                }
+            }
+        );
+
+        customElements.define(
+            "w-comp2",
+            class extends WHTMLElement {
+                constructor() {
+                    super();
+                    console.log('w-comp2 constructor');
+                }
+                connectedCallback() {
+                    super.connectedCallback();
+                    console.log("w-comp2 Custom square element added to page.");
+                }
+
+                disconnectedCallback() {
+                    console.log("w-comp2 Custom square element removed from page.");
+                }
+
+                adoptedCallback() {
+                    console.log("w-comp2 Custom square element moved to new page.");
+                }
+
+                attributeChangedCallback(name, oldValue, newValue) {
+                    console.log("w-comp2 Custom square element attributes changed.");
+                }
+            }
+        );
+
+        const el2 = document.createElement("w-comp2");
+        console.log(el2);
+
+        document.body.appendChild(el1);
+        document.body.appendChild(el1);
+        document.body.appendChild(el1);
+
+        console.log(WHTMLElement.getContext());
+    </script>
+</body>
+
+</html>
