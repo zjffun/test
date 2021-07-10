@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .foo::after {
+        content: "foo";
+      }
+      .bar::after {
+        content: "bar";
+      }
+    </style>
+    <div>
+      <template zel>
+        <script>
+          () => {
+            const clazz = zel.r("foo");
+            return {
+              attr: {
+                class: clazz,
+              },
+              event: {
+                click() {
+                  if (clazz.val === "foo") {
+                    clazz.next("bar");
+                  } else {
+                    clazz.next("foo");
+                  }
+                },
+              },
+            };
+          };
+        </script>
+      </template>
+
+      <div>
+        <template zel>
+          <script>
+            () => {
+              const activeKey = zel.r("english");
+              return {
+                ctx: {
+                  copy() {
+                    alert("copy");
+                  },
+                  setAactiveKey(d) {
+                    activeKey.next(d);
+                  },
+                },
+              };
+            };
+          </script>
+        </template>
+        <w-tabs active-key="english">
+          <template zel>
+            <script>
+              () => {
+                const activeKey = zel.r("english");
+                return {
+                  attr: {
+                    "active-key": activeKey,
+                  },
+                };
+              };
+            </script>
+          </template>
+          <div>
+            <w-tab-pane tab="English" key="english">
+              <p>
+                Permission denied: Running extensions on chrome:// URLs is
+                disabled.
+              </p>
+              <p>
+                Please <b>open chrome://flags/#extensions-on-chrome-urls</b>
+                <button>
+                  <template zel>
+                    <script type="module">
+                      import { copy } from "./t.js";
+
+                      export default () => {
+                        return {
+                          event: {
+                            click: copy,
+                          },
+                        };
+                      };
+                    </script>
+                  </template>
+                  copy this link
+                </button>
+                and then <b>select Enabled</b> to enable running extensions on
+                chrome:// URLs.
+              </p>
+              <p>
+                Or you can
+                <button>
+                  <template zel>
+                    <script type="module">
+                      import { open } from "./t.js";
+
+                      export default () => {
+                        return {
+                          event: {
+                            click: open,
+                          },
+                        };
+                      };
+                    </script>
+                  </template>
+                  open chrome://net-internals/#sockets
+                </button>
+                then manually click `Close idle sockets` button and `Flush
+                socket pools` button.
+              </p>
+            </w-tab-pane>
+            <w-tab-pane tab="Chinese" key="chinese">
+              <p>
+                Please <b>open chrome://flags/#extensions-on-chrome-urls</b>
+                <button>
+                  <template zel>
+                    <script type="module">
+                      import { copy } from "./t.js";
+
+                      export default () => {
+                        return {
+                          event: {
+                            click: copy,
+                          },
+                        };
+                      };
+                    </script>
+                  </template>
+                  copy this link
+                </button>
+                and then <b>select Enabled</b> to enable running extensions on
+                chrome:// URLs.
+              </p>
+              <p>
+                Or you can
+                <button>
+                  <template zel>
+                    <script type="module">
+                      import { open } from "./t.js";
+
+                      export default () => {
+                        return {
+                          event: {
+                            click: open,
+                          },
+                        };
+                      };
+                    </script>
+                  </template>
+                  open chrome://net-internals/#sockets
+                </button>
+                then manually click `Close idle sockets` button and `Flush
+                socket pools` button.
+              </p>
+            </w-tab-pane>
+          </div>
+        </w-tabs>
+      </div>
+    </div>
+    <input
+      id="js-copy-data"
+      type="text"
+      value="chrome://flags/#extensions-on-chrome-urls"
+    />
+    <script src="./zel.js"></script>
+  </body>
+</html>
