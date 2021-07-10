@@ -14,21 +14,8 @@
     ></w-img>
 
     <script src="./WHTMLElement.js"></script>
-
+    <script src="./WElements.js"></script>
     <script>
-      // Create a class for the element
-      class WImage extends WHTMLElement {
-        constructor() {
-          // Always call super first in constructor
-          super();
-          var img1 = document.createElement("img"); // Image constructor
-
-          this.initDom(img1);
-        }
-      }
-
-      customElements.define("w-img", WImage);
-
       setTimeout(() => {
         document
           .querySelector("w-img")

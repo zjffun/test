@@ -135,20 +135,6 @@
     </script>
 
     <script src="./WHTMLElement.js"></script>
-
-    <script>
-      class WDiv extends WHTMLElement {
-        constructor() {
-          // Always call super first in constructor
-          super();
-
-          const divEl = document.createElement("div");
-
-          this.initDom(divEl);
-        }
-      }
-
-      customElements.define("w-div", WDiv);
-    </script>
+    <script src="./WElements.js"></script>
   </body>
 </html>

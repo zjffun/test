@@ -44,36 +44,8 @@
       </tr>
     </table>
 
-    <script src="./WHTMLElement.js"></script>
-    <script>
-      class WTable extends WHTMLElement {
-        constructor() {
-          super();
-          var el = document.createElement("table");
-
-          this.initDom(el);
-        }
-      }
-      class WTr extends WHTMLElement {
-        constructor() {
-          super();
-          var el = document.createElement("tr");
-
-          this.initDom(el);
-        }
-      }
-      class WTd extends WHTMLElement {
-        constructor() {
-          super();
-          var el = document.createElement("td");
-
-          this.initDom(el);
-        }
-      }
-
-      customElements.define("w-table", WTable);
-      customElements.define("w-tr", WTr);
-      customElements.define("w-td", WTd);
-    </script>
+    <script src="./WHTWDivMLElement.js"></script>
+    <script src="./WElements.js"></script>
+    <script></script>
   </body>
 </html>

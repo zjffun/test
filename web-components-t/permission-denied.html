@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Permission denied</title>
+    <style>
+      .container {
+        width: 350px;
+      }
+
+      #js-copy-data {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+      }
+
+      button {
+        font-size: inherit;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <w-div>
+        <template id="10" data>
+          <script>
+            () => {
+              return {
+                ctx: {
+                  copy: () => {
+                    alert("copy");
+                  },
+                  activeKey: "english",
+                  setAactiveKey() {
+                    console.log(this.el.dataset.foo);
+                    this.wSetData("activeKey", this.el.dataset.foo);
+                  },
+                },
+                localCtx: {},
+              };
+            };
+          </script>
+        </template>
+        <w-comp name="w-tabs" active-key="english" :active-key="activeKey">
+          <w-button @click="setAactiveKey" data-foo="foo">test</w-button>
+          <w-div>
+            <template id="9" data>
+              <script>
+                () => {
+                  function copy() {
+                    console.log("permission-denied copy click");
+
+                    var copyText = document.getElementById("js-copy-data");
+
+                    copyText.select();
+                    copyText.setSelectionRange(
+                      0,
+                      99999
+                    ); /* For mobile devices */
+
+                    document.execCommand("copy");
+                  }
+
+                  function open() {
+                    console.log("permission-denied openSocketsPage click");
+                  }
+
+                  return {
+                    ctx: {
+                      copy,
+                      open,
+                    },
+                  };
+                };
+              </script>
+            </template>
+            <w-tab-pane tab="English" key="english">
+              <p>
+                Permission denied: Running extensions on chrome:// URLs is
+                disabled.
+              </p>
+              <p>
+                Please <b>open chrome://flags/#extensions-on-chrome-urls</b>
+                <w-button @click="#9.copy">copy this link</w-button>
+                and then <b>select Enabled</b> to enable running extensions on
+                chrome:// URLs.
+              </p>
+              <p>
+                Or you can
+                <w-button @click="open">
+                  open chrome://net-internals/#sockets
+                </w-button>
+                then manually click `Close idle sockets` button and `Flush
+                socket pools` button.
+              </p>
+            </w-tab-pane>
+            <w-tab-pane tab="Chinese" key="chinese">
+              <p>
+                Please <b>open chrome://flags/#extensions-on-chrome-urls</b>
+                <w-button @click="#10.copy">copy this link</w-button>
+                and then <b>select Enabled</b> to enable running extensions on
+                chrome:// URLs.
+              </p>
+              <p>
+                Or you can
+                <w-button @click="open">
+                  open chrome://net-internals/#sockets
+                </w-button>
+                then manually click `Close idle sockets` button and `Flush
+                socket pools` button.
+              </p>
+            </w-tab-pane>
+          </w-div>
+        </w-comp>
+      </w-div>
+
+      <input
+        id="js-copy-data"
+        type="text"
+        value="chrome://flags/#extensions-on-chrome-urls"
+      />
+    </div>
+    <script src="./WHTMLElement.js"></script>
+    <script src="./WElements.js"></script>
+    <script src="./permission-denied.js"></script>
+  </body>
+</html>

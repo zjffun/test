@@ -1,21 +1,19 @@
 class WHTMLElement extends HTMLElement {
+  static wcontext = {};
+
   constructor() {
     // Always call super first in constructor
     super();
 
     this.defaultValue = {};
-    this.defaultData = {};
+    this.defaultData = Object.create(WHTMLElement.wcontext);
     this.keyAttrMap = new Map();
     this.events = {};
     this.el;
 
     try {
       this.defaultData = eval(
-        this.querySelector("template[defaultData]").content.children[0]
-          .textContent
-      );
-      this.events = eval(
-        this.querySelector("template[events]").content.children[0].textContent
+        this.querySelector("template[data]").content.children[0].textContent
       );
     } catch (error) {
       console.error(error);
@@ -61,12 +59,18 @@ class WHTMLElement extends HTMLElement {
       }
       this.removeAttribute(name);
     });
+  }
 
-    this.parentElement.insertBefore(el, this);
+  connectedCallback() {
+    this.parentElement.insertBefore(this.el, this);
+  }
+
+  disconnectedCallback() {
+    this.el.remove();
   }
 
   wGetEventListener(key) {
-    return this.events[key];
+    return this.defaultData[key];
   }
 
   wSetData(key, data) {
