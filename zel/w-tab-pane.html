@@ -1,0 +1,34 @@
+<w-tab-pane tab="Chinese" key="chinese">
+  <template zel>
+    <script type="module">
+      import { activeKey } from "./t.js";
+
+      export default ({ el }) => {
+        const hidden = zel.r(activeKey.val !== el.getAttribute("key"));
+
+        activeKey.subscribe((activeKey) => {
+          hidden.next(activeKey !== el.getAttribute("key"));
+        });
+
+        return {
+          attr: {
+            hidden: hidden,
+          },
+        };
+      };
+    </script>
+  </template>
+  中文
+  <p>
+    Please <b>open chrome://flags/#extensions-on-chrome-urls</b>
+    <template zel-component="./copy-btn.html"></template>
+    and then <b>select Enabled</b> to enable running extensions on chrome://
+    URLs.
+  </p>
+  <p>
+    Or you can
+    <template zel-component="./open-btn.html"></template>
+    then manually click `Close idle sockets` button and `Flush socket pools`
+    button.
+  </p>
+</w-tab-pane>

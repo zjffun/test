@@ -1,5 +1,6 @@
 (() => {
   const zelSelector = "[zel]";
+  const zelComponentSelector = "[zel-component]";
   const baseUrl = "http://127.0.0.1:5500/";
 
   async function initZel(zelEl) {
@@ -22,10 +23,10 @@
         };
 
         res = (await import(esm`${zelFnEl.textContent}`)).default;
-        res = res();
+        res = res({ el });
       } else {
         try {
-          res = eval(zelFnEl.textContent)();
+          res = eval(zelFnEl.textContent)({ el });
         } catch (error) {
           console.error(error);
         }
@@ -37,7 +38,11 @@
     if (attributes) {
       for (const attribute of Object.entries(attributes)) {
         attribute[1].subscribe((val) => {
-          el.setAttribute(attribute[0], val);
+          if (!val) {
+            el.removeAttribute(attribute[0]);
+          } else {
+            el.setAttribute(attribute[0], val);
+          }
         });
       }
     }
@@ -51,10 +56,43 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const zelEL = Array.from(document.querySelectorAll(zelSelector));
-    zelEL.forEach((el) => {
+  async function initZelComponent(zelComponentEl) {
+    const url = zelComponentEl.getAttribute("zel-component");
+    const content = await fetch(url).then((d) => d.text());
+    const divEl = document.createElement("div");
+    divEl.innerHTML = content;
+    const fragmentEl = document.createDocumentFragment();
+    fragmentEl.append(...divEl.childNodes);
+
+    // init zel
+    const zelEl = Array.from(fragmentEl.querySelectorAll(zelSelector));
+    zelEl.forEach((el) => {
       initZel(el);
+    });
+
+    // init comp
+    const zelComponentEls = Array.from(
+      fragmentEl.querySelectorAll(zelComponentSelector)
+    );
+    zelComponentEls.forEach((el) => {
+      initZelComponent(el);
+    });
+
+    // insert
+    zelComponentEl.parentElement.insertBefore(fragmentEl, zelComponentEl);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const zelEl = Array.from(document.querySelectorAll(zelSelector));
+    zelEl.forEach((el) => {
+      initZel(el);
+    });
+
+    const zelComponentEl = Array.from(
+      document.querySelectorAll(zelComponentSelector)
+    );
+    zelComponentEl.forEach((el) => {
+      initZelComponent(el);
     });
   });
 

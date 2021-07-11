@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
   </head>
   <body>
@@ -16,7 +14,7 @@
       }
     </style>
     <div>
-      <template zel>
+      <template zel="">
         <script>
           () => {
             const clazz = zel.r("foo");
@@ -39,7 +37,7 @@
       </template>
 
       <div>
-        <template zel>
+        <template zel="">
           <script>
             () => {
               const activeKey = zel.r("english");
@@ -57,7 +55,7 @@
           </script>
         </template>
         <w-tabs active-key="english">
-          <template zel>
+          <template zel="">
             <script type="module">
               import { activeKey } from "./t.js";
 
@@ -72,7 +70,7 @@
           </template>
 
           <button>
-            <template zel>
+            <template zel="">
               <script type="module">
                 import { activeKey } from "./t.js";
 
@@ -91,7 +89,7 @@
           </button>
 
           <button>
-            <template zel>
+            <template zel="">
               <script type="module">
                 import { activeKey } from "./t.js";
 
@@ -110,7 +108,7 @@
           </button>
           <div>
             <w-tab-pane tab="English" key="english">
-              <template zel>
+              <template zel="">
                 <script type="module">
                   import { activeKey } from "./t.js";
 
@@ -137,27 +135,122 @@
               </p>
               <p>
                 Please <b>open chrome://flags/#extensions-on-chrome-urls</b>
-                <template zel-component="./copy-btn.html"></template>
+                <button>
+  <template zel="">
+    <script type="module">
+      import { copy } from "./t.js";
+
+      export default () => {
+        return {
+          event: {
+            click: copy,
+          },
+        };
+      };
+    </script>
+  </template>
+  copy this link
+</button>
+<template zel-component-loaded="./copy-btn.html"></template>
                 and then <b>select Enabled</b> to enable running extensions on
                 chrome:// URLs.
               </p>
               <p>
                 Or you can
-                <template zel-component="./open-btn.html"></template>
+                <button>
+  <template zel="">
+    <script type="module">
+      import { open } from "./t.js";
+
+      export default () => {
+        return {
+          event: {
+            click: open,
+          },
+        };
+      };
+    </script>
+  </template>
+  open chrome://net-internals/#sockets
+</button>
+<template zel-component-loaded="./open-btn.html"></template>
                 then manually click `Close idle sockets` button and `Flush
                 socket pools` button.
               </p>
             </w-tab-pane>
-            <template zel-component="./w-tab-pane.html"></template>
+            <w-tab-pane tab="Chinese" key="chinese">
+  <template zel="">
+    <script type="module">
+      import { activeKey } from "./t.js";
+
+      export default ({ el }) => {
+        const hidden = zel.r(activeKey.val !== el.getAttribute("key"));
+
+        activeKey.subscribe((activeKey) => {
+          hidden.next(activeKey !== el.getAttribute("key"));
+        });
+
+        return {
+          attr: {
+            hidden: hidden,
+          },
+        };
+      };
+    </script>
+  </template>
+  中文
+  <p>
+    Please <b>open chrome://flags/#extensions-on-chrome-urls</b>
+    <button>
+  <template zel="">
+    <script type="module">
+      import { copy } from "./t.js";
+
+      export default () => {
+        return {
+          event: {
+            click: copy,
+          },
+        };
+      };
+    </script>
+  </template>
+  copy this link
+</button>
+<template zel-component-loaded="./copy-btn.html"></template>
+    and then <b>select Enabled</b> to enable running extensions on chrome://
+    URLs.
+  </p>
+  <p>
+    Or you can
+    <button>
+  <template zel="">
+    <script type="module">
+      import { open } from "./t.js";
+
+      export default () => {
+        return {
+          event: {
+            click: open,
+          },
+        };
+      };
+    </script>
+  </template>
+  open chrome://net-internals/#sockets
+</button>
+<template zel-component-loaded="./open-btn.html"></template>
+    then manually click `Close idle sockets` button and `Flush socket pools`
+    button.
+  </p>
+</w-tab-pane>
+<template zel-component-loaded="./w-tab-pane.html"></template>
           </div>
         </w-tabs>
       </div>
     </div>
-    <input
-      id="js-copy-data"
-      type="text"
-      value="chrome://flags/#extensions-on-chrome-urls"
-    />
+    <input id="js-copy-data" type="text" value="chrome://flags/#extensions-on-chrome-urls">
     <script src="./zel.js"></script>
-  </body>
-</html>
+  
+
+</body></html>
