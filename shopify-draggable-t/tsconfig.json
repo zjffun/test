@@ -1,0 +1,3 @@
+{
+  "include": ["t.ts", "typings.d.ts"]
+}
