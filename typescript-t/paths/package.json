@@ -1,0 +1,6 @@
+{
+  "name": "paths",
+  "dependencies": {
+    "@paths/bar": "1.0.0"
+  }
+}
