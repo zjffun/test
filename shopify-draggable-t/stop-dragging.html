@@ -1,0 +1,41 @@
+<style>
+  .container {
+    display: flex;
+  }
+  .item {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    background: violet;
+  }
+</style>
+
+<div class="container">
+  <div class="item">A</div>
+  <div class="item">B</div>
+  <div class="item">C</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.12/lib/draggable.bundle.js"></script>
+<script>
+  const draggable = new Draggable.Draggable(
+    document.querySelectorAll(".container"),
+    {
+      draggable: ".item",
+    }
+  );
+
+  const triggerMouseUpOnESC = (evt) => {
+    if (evt.key === "Escape") {
+      document.dispatchEvent(new Event("drag:stop"));
+    }
+  };
+
+  draggable.on("drag:start", function (e) {
+    document.addEventListener("keyup", triggerMouseUpOnESC);
+  });
+
+  draggable.on("drag:stop", function (e) {
+    document.removeEventListener("keyup", triggerMouseUpOnESC);
+  });
+</script>
