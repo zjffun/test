@@ -1,7 +1,8 @@
 /**
+ * open 6 pending req
  * http://localhost:8080/script
  *
- * // page will pending
+ * page will pending
  * http://localhost:8080/page
  */
 
