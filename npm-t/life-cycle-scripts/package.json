@@ -1,0 +1,23 @@
+{
+  "name": "life-cycle-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "// postinstall": "cd $INIT_CWD;npm install lodash",
+    "prepublish": "cd $INIT_CWD;npm install lodash",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "lodash": "*"
+  },
+  "devDependencies": {
+    "install-peerdeps": "^3.0.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
