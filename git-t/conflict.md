@@ -1,4 +1,6 @@
 ```
+# --- test merge ---
+# create two branch
 git checkout -b test/conflict1 master
 echo conflict1 > test
 git add .
@@ -16,11 +18,13 @@ git commit -mfix
 git checkout test/conflict1
 git merge test/conflict2
 
+# --- test auto merge ---
+# commit to two branch
 echo conflict11 >> test
 git add test
 git commit -mconflict11
 git checkout test/conflict2
-sed -i.bak '1s/^/conflict22\n/' test
+echo conflict11 >> test
 rm test.bak
 git add test
 git commit -mconflict22
@@ -28,6 +32,7 @@ git commit -mconflict22
 # will auto merge
 git merge test/conflict1
 
+# --- clean ---
 git checkout master
 git branch -D test/conflict1
 git branch -D test/conflict2
