@@ -24,7 +24,7 @@ echo conflict11 >> test
 git add test
 git commit -mconflict11
 git checkout test/conflict2
-echo conflict11 >> test
+sed -i.bak '1s/^/conflict22\n/' test
 rm test.bak
 git add test
 git commit -mconflict22
