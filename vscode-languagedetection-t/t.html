@@ -1,0 +1,50 @@
+<script src="./node_modules/@vscode/vscode-languagedetection/dist/lib/index.js"></script>
+
+<script type="module">
+  const { ModelOperations } = window["vscode-languagedetection"];
+
+  const modulOperations = new ModelOperations({
+    modelJsonLoaderFunc: async () => {
+      const response = await fetch(
+        "./node_modules/@vscode/vscode-languagedetection/model/model.json"
+      );
+
+      try {
+        const modelJSON = await response.json();
+        return modelJSON;
+      } catch (e) {
+        const message = `Failed to parse model JSON.`;
+        throw new Error(message);
+      }
+    },
+    weightsLoaderFunc: async () => {
+      const response = await fetch(
+        "./node_modules/@vscode/vscode-languagedetection/model/group1-shard1of1.bin"
+      );
+      const buffer = await response.arrayBuffer();
+      return buffer;
+    },
+  });
+
+  const result = await modulOperations.runModel(`
+  function makeThing(): Thing {
+      let size = 0;
+      return {
+          get size(): number {
+          return size;
+          },
+          set size(value: string | number | boolean) {
+          let num = Number(value);
+          // Don't allow NaN and stuff.
+          if (!Number.isFinite(num)) {
+              size = 0;
+              return;
+          }
+          size = num;
+          },
+      };
+  }
+  `);
+
+  console.log(result);
+</script>

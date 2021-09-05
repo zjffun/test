@@ -1,0 +1,9 @@
+{
+  "name": "vscode-languagedetection-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@vscode/vscode-languagedetection": "^1.0.21"
+  }
+}
