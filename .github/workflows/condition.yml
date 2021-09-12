@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - test/actions/condition
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - run: echo success()
+      - run: echo matrix.os
+      - run: echo matrix.os == 'ubuntu-latest'
+      - run: echo github.ref
+      - run: echo startsWith( github.ref, 'refs/tags/releases/')
+      - name: Publish
+        if: success() && startsWith( github.ref, 'refs/tags/releases/') && matrix.os == 'ubuntu-latest'
+        run: echo Publish
