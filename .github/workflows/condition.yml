@@ -16,11 +16,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - run: echo success()
-      - run: echo matrix.os
-      - run: echo matrix.os == 'ubuntu-latest'
-      - run: echo github.ref
-      - run: echo startsWith( github.ref, 'refs/tags/releases/')
+      - run: echo Start
+      - if: success()
+        run: echo c1
+      - if: matrix.os == 'ubuntu-latest'
+        run: echo c2
+      - if: startsWith( github.ref, 'refs/tags/releases/')
+        run: echo c3
       - name: Publish
         if: success() && startsWith( github.ref, 'refs/tags/releases/') && matrix.os == 'ubuntu-latest'
         run: echo Publish
