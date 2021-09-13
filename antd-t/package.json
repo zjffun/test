@@ -1,0 +1,20 @@
+{
+  "name": "antd-t",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@formily/antd": "^2.0.0-rc.4",
+    "@formily/core": "^2.0.0-rc.4",
+    "@formily/react": "^2.0.0-rc.4",
+    "antd": "^4.16.13",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}

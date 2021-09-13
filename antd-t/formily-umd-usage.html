@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./node_modules/antd/dist/antd.min.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+
+    <!-- @formily start -->
+    <script src="./node_modules/react-is/umd/react-is.development.js"></script>
+    <script src="./node_modules/@formily/path/dist/formily.path.umd.development.js"></script>
+    <script src="./node_modules/@formily/shared/dist/formily.shared.umd.development.js"></script>
+    <script src="./node_modules/@formily/validator/dist/formily.validator.umd.development.js"></script>
+    <script src="./node_modules/@formily/core/dist/formily.core.umd.development.js"></script>
+    <script src="./node_modules/@formily/reactive/dist/formily.reactive.umd.development.js"></script>
+    <script src="./node_modules/@formily/reactive-react/dist/formily.reactive-react.umd.development.js"></script>
+    <script src="./node_modules/@formily/react/dist/formily.react.umd.development.js"></script>
+    <script>
+      window.icons = new Proxy(
+        {},
+        {
+          get() {
+            return "";
+            // return React.createElement("span");
+          },
+        }
+      );
+    </script>
+
+    <script src="./node_modules/antd/dist/antd.min.js"></script>
+    <script>
+      window.Antd = window.antd;
+    </script>
+
+    <script src="./node_modules/@formily/json-schema/dist/formily.json-schema.umd.development.js"></script>
+    <script src="./node_modules/@formily/antd/dist/formily.antd.umd.development.js"></script>
+
+    <!-- @formily end -->
+
+    <script>
+      console.log("@formily/antd", window.Formily);
+
+      const SchemaField = Formily.React.createSchemaField({
+        components: {
+          FormItem: Formily.Antd.FormItem,
+          Input: Formily.Antd.Input,
+          ArrayCards: Formily.Antd.ArrayCards,
+        },
+      });
+
+      const form = Formily.Core.createForm();
+
+      const schema = {
+        type: "object",
+        properties: {
+          string_array: {
+            type: "array",
+            "x-component": "ArrayCards",
+            maxItems: 3,
+            "x-decorator": "FormItem",
+            "x-component-props": {
+              title: "String array",
+            },
+            items: {
+              type: "void",
+              properties: {
+                index: {
+                  type: "void",
+                  "x-component": "ArrayCards.Index",
+                },
+                input: {
+                  type: "string",
+                  "x-decorator": "FormItem",
+                  title: "Input",
+                  required: true,
+                  "x-component": "Input",
+                },
+                remove: {
+                  type: "void",
+                  "x-component": "ArrayCards.Remove",
+                },
+                moveUp: {
+                  type: "void",
+                  "x-component": "ArrayCards.MoveUp",
+                },
+                moveDown: {
+                  type: "void",
+                  "x-component": "ArrayCards.MoveDown",
+                },
+              },
+            },
+            properties: {},
+          },
+          array: {
+            type: "array",
+            "x-component": "ArrayCards",
+            maxItems: 3,
+            "x-decorator": "FormItem",
+            "x-component-props": {
+              title: "Object array",
+            },
+            items: {
+              type: "object",
+              properties: {
+                index: {
+                  type: "void",
+                  "x-component": "ArrayCards.Index",
+                },
+                input: {
+                  type: "string",
+                  "x-decorator": "FormItem",
+                  title: "Input",
+                  required: true,
+                  "x-component": "Input",
+                },
+                remove: {
+                  type: "void",
+                  "x-component": "ArrayCards.Remove",
+                },
+                moveUp: {
+                  type: "void",
+                  "x-component": "ArrayCards.MoveUp",
+                },
+                moveDown: {
+                  type: "void",
+                  "x-component": "ArrayCards.MoveDown",
+                },
+              },
+            },
+            properties: {},
+          },
+        },
+      };
+
+      ReactDOM.render(
+        React.createElement(
+          Formily.React.FormProvider,
+          {
+            form: form,
+          },
+          React.createElement(SchemaField, {
+            schema: schema,
+          }),
+          React.createElement(
+            Formily.Antd.FormButtonGroup,
+            null,
+            React.createElement(
+              Formily.Antd.Submit,
+              {
+                onSubmit: console.log,
+              },
+              "Submit"
+            )
+          )
+        ),
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>
