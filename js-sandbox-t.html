@@ -1,0 +1,50 @@
+<script>
+  // "use strict";
+
+  window.foo = "outer foo";
+
+  // 不同子应用创建不同的 sandboxWindow, sandboxProxy
+  const sandboxWindow = {
+    document: {
+      appendChild() {},
+    },
+  };
+  const sandboxProxy = new Proxy(sandboxWindow, {
+    set: function (obj, prop, value) {
+      obj[prop] = value;
+
+      // Indicate success
+      return true;
+    },
+    get: function (obj, prop) {
+      return prop in obj ? obj[prop] : window[prop];
+    },
+  });
+
+  // 执行子应用
+  // 也可以用 function 来替换 window
+  with ({
+    window: sandboxProxy,
+  }) {
+    console.log(window);
+    // 子应用 js
+    window.cb = () => {
+      console.log("inner callback");
+    };
+
+    document.createElement("script");
+  }
+
+  function runSandbox(window) {
+    console.log(window, this);
+    // 子应用 js
+    window.cb = () => {
+      console.log("inner callback");
+    };
+    document.createElement("script");
+  }
+
+  runSandbox.bind(sandboxProxy)(sandboxProxy);
+
+  console.log("outer", window.foo);
+</script>
