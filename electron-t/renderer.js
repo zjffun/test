@@ -42,7 +42,7 @@ document.getElementById("cp").addEventListener("click", (params) => {
 
 document.getElementById("7zz").addEventListener("click", (params) => {
   const res = window.myAPI.runCmd({
-    cmd: "cp",
+    cmd: "7zz",
     src: srcFile,
     dest: destFolder,
   });

@@ -20,7 +20,7 @@ contextBridge.exposeInMainWorld("myAPI", {
         args = [...src, ...dest];
         break;
       case "7zz":
-        args = ["-x", ...src, "-o", ...dest];
+        args = ["x", ...src, `-o${dest[0]}`];
         break;
       default:
         break;
