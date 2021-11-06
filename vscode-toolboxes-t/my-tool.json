@@ -1,0 +1,11 @@
+{
+  "name": "my-tool",
+  "label": "my-tool",
+  "main": "./my-tool.js",
+  "tools": [
+    {
+      "label": "split |",
+      "name": "split"
+    }
+  ]
+}
