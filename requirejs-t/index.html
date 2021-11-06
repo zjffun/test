@@ -1,0 +1,10 @@
+<script src="./node_modules/requirejs/require.js"></script>
+
+<script>
+  define("react", [], function () {
+    return "my react";
+  });
+  require(["react"], (react) => {
+    console.log(react);
+  });
+</script>
