@@ -1,0 +1,20 @@
+<script>
+  const arr = new Array(1000).map((d, i) => i);
+  const arr2 = [];
+
+  async function profilingTest() {
+    console.log("start");
+    performance.mark("example-start");
+    for (const a of arr) {
+      for (const b of arr) {
+        arr2.push(a * b);
+      }
+    }
+    performance.mark("example-end");
+    // DevTools - Performance - Timings tab
+    performance.measure("example-measure", "example-start", "example-end");
+    console.log("end");
+  }
+
+  setInterval(profilingTest, 1000);
+</script>
