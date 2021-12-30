@@ -1,0 +1,12 @@
+{
+  "name": "eslint-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "eslint-plugin-no-else": "^0.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.5.0"
+  }
+}
