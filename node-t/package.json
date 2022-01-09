@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "spawn": "node spawn.js",
-    "node-profiling": "rm -rf isolate-0x*-v8.log && node --prof profiling-test.js && node --prof-process isolate-0x*-v8.log > processed.log",
-    "node-profiling:chrome": "node --inspect profiling-test.js"
+    "node-profiling:cpu-prof": "node --cpu-prof --heap-prof profiling-test.js",
+    "node-profiling:chrome": "node --inspect profiling-test.js",
+    "node-profiling": "rm -rf isolate-0x*-v8.log && node --prof profiling-test.js && node --prof-process isolate-0x*-v8.log > processed.log"
   },
   "keywords": [],
   "author": "",

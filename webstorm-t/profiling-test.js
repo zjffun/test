@@ -6,12 +6,7 @@ const { performance } = require("perf_hooks");
 const arr = new Array(1000).map((d, i) => i);
 const arr2 = [];
 
-let i = 0;
-
 function profilingTest() {
-  if (i++ > 30) {
-    process.exit();
-  }
   console.log("start");
   performance.mark("example-start");
   for (const a of arr) {
