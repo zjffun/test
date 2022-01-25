@@ -2,8 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "sourceMap": true
   },
-  "files": ["index.ts"],
+  "files": ["index.ts", "profiling.ts"],
   "include": ["types.d.ts"]
 }
