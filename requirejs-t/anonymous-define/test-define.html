@@ -1,0 +1,30 @@
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.js"></script>
+
+<!-- 不报错 -->
+
+<script>
+  require(["./test-module.js"], function (module) {
+    console.log(module.foo);
+  });
+</script>
+
+<script>
+  require(["test-module"], function (module) {
+    console.log(module.foo);
+  });
+</script>
+
+<!-- 报错 -->
+
+<script src="./test-module.js"></script>
+
+<script>
+  define(function () {
+    console.log("define");
+
+    return {
+      foo: "foo",
+      bar: "bar",
+    };
+  });
+</script>
