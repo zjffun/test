@@ -1,0 +1,21 @@
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.js"></script>
+
+<script>
+  /* 
+    RequireJS 会在加载后 4ms (nextTick) 清一下队列，对于 4ms 后 define 的模块会在下次清队列时处理。
+    所以下面这段代码不会报错，但如果放开调用 require 函数的注释就会报错。
+  */
+  setTimeout(function () {
+    define([], function () {
+      console.log("define");
+
+      return {
+        foo: "foo",
+        bar: "bar",
+      };
+    });
+
+    // 放开下面这行调用 require 函数的注释会报错
+    // require();
+  }, 5);
+</script>
