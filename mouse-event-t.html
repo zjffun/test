@@ -13,16 +13,20 @@
     </div>
     <script>
       document.querySelector("div").addEventListener("mouseover", (e) => {
-        console.log("body mouseover", e.target, e.target === e.currentTarget);
+        console.log("test mouseover", e.target, e.target === e.currentTarget);
       });
+      // Though similar to mouseover, mouseenter differs in that it doesn't bubble
       document.querySelector("div").addEventListener("mouseenter", (e) => {
-        console.log("body mouseenter", e.target);
+        console.log("test mouseenter", e.target);
+      });
+      document.querySelector("span").addEventListener("mouseenter", (e) => {
+        console.log("span mouseenter", e.target);
       });
       document.querySelector("div").addEventListener("mouseout", (e) => {
-        console.log("body mouseout", e.target);
+        console.log("test mouseout", e.target);
       });
       document.querySelector("div").addEventListener("mouseleave", (e) => {
-        console.log("body mouseleave", e.target);
+        console.log("test mouseleave", e.target);
       });
     </script>
   </body>

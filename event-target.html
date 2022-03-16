@@ -1,0 +1,14 @@
+<script>
+  document.addEventListener(
+    "testevent",
+    function (e) {
+      console.log(1);
+    },
+    false
+  );
+
+  const event = new Event("testevent");
+  document.dispatchEvent(event);
+
+  console.log(2);
+</script>
