@@ -4,7 +4,7 @@
   "description": "<img src=\"./icon128.png\" height=\"30\">",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "http-server ./ --cors -p 1024"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,11 @@
+@font-face {
+  font-family: my-font;
+  src: url("./Florilane Cardillac.ttf");
+}
+
+body {
+  font-family: my-font;
+  background: url("./a.png");
+
+  font-size: 40px;
+}

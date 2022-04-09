@@ -1,0 +1,18 @@
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const { useState, useEffect, useRef } = React;
+
+  function HelloWorld() {
+    return <div>HelloWorld</div>;
+  }
+
+  // Tells React to attach the HelloWorld component to the 'root' HTML div
+  ReactDOM.render(<HelloWorld />, document.getElementById("root"));
+</script>

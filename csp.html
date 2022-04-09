@@ -1,0 +1,16 @@
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src https://cdn.jsdelivr.net/ 'nonce-2726c7f26c'; img-src https://picsum.photos/ https://i.picsum.photos/"
+/>
+
+<!-- img-src -->
+<img src="https://via.placeholder.com/350x150" alt="" />
+<!-- redirect to i.picsum.photos -->
+<img src="https://picsum.photos/200/300" alt="" />
+
+<!-- script-src -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script nonce="2726c7f26c">
+  // connect-src
+  fetch("https://google.com");
+</script>

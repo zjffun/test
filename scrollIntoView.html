@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="scrollIntoView1()">scrollIntoView</button>
+    <div>123</div>
+    <div style="height: 2000px; width: 4000px"></div>
+
+    <div>
+      aaaaaaaaaaaaaa
+      <span id="456">456</span>
+      bbbbbbbbbbbbb
+    </div>
+
+    <div style="height: 2000px"></div>
+
+    <script>
+      function scrollIntoView1() {
+        document.getElementById("456").scrollIntoView({
+          block: "center",
+          inline: "start",
+        });
+      }
+    </script>
+  </body>
+</html>

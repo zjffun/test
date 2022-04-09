@@ -15,7 +15,7 @@
       document.querySelector("div").addEventListener("mouseover", (e) => {
         console.log("test mouseover", e.target, e.target === e.currentTarget);
       });
-      // Though similar to mouseover, mouseenter differs in that it doesn't bubble
+      // Though similar to mouseover, mouseenter differs in that it doesn't **bubble**
       document.querySelector("div").addEventListener("mouseenter", (e) => {
         console.log("test mouseenter", e.target);
       });
@@ -27,6 +27,49 @@
       });
       document.querySelector("div").addEventListener("mouseleave", (e) => {
         console.log("test mouseleave", e.target);
+      });
+
+      const body = document.querySelector("body");
+      body.addEventListener(
+        "mouseover",
+        (e) => {
+          console.log("----------");
+          console.log("body mouseover capture");
+        },
+        true
+      );
+      body.addEventListener("mouseover", (e) => {
+        console.log("body mouseover");
+      });
+      body.addEventListener(
+        "mouseenter",
+        (e) => {
+          console.log("body mouseenter capture");
+        },
+        true
+      );
+      body.addEventListener("mouseenter", (e) => {
+        console.log("body mouseenter");
+      });
+      body.addEventListener(
+        "mouseout",
+        (e) => {
+          console.log("body mouseout capture");
+        },
+        true
+      );
+      body.addEventListener("mouseout", (e) => {
+        console.log("body mouseout");
+      });
+      body.addEventListener(
+        "mouseleave",
+        (e) => {
+          console.log("body mouseleave capture");
+        },
+        true
+      );
+      body.addEventListener("mouseleave", (e) => {
+        console.log("body mouseleave");
       });
     </script>
   </body>
