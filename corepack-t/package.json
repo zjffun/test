@@ -1,0 +1,12 @@
+{
+  "name": "corepack-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "// npm can be used current, although packageManager is set to yarn": "",
+  "packageManager": "yarn@1.22.15",
+  "// packageManager": "npm@8.5.5",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
