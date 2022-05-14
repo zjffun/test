@@ -1,0 +1,12 @@
+{
+  "name": "promise-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "yarn promises-aplus-tests my-promise.js"
+  },
+  "dependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
