@@ -1,0 +1,12 @@
+{
+  "name": "diff-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "diff": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/diff": "^5.0.2"
+  }
+}
