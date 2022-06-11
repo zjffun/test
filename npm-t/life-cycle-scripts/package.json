@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "// postinstall": "cd $INIT_CWD;npm install lodash",
-    "prepublish": "cd $INIT_CWD;npm install lodash",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "echo prepublish",
+    "preinstall": "echo preinstall",
+    "install": "echo install",
+    "postinstall": "echo postinstall",
+    "prepare": "echo prepare",
+    "prepublishOnly ": "echo prepublishOnly"
   },
   "peerDependencies": {
     "lodash": "*"
@@ -17,7 +21,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "lodash": "^4.17.21"
-  }
+  "dependencies": {}
 }

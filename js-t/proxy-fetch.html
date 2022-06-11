@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const originalFetch = window.fetch;
+
+      window.fetch = new Proxy(originalFetch, {
+        apply(target, thisArg, [input, init, ...argArray]) {
+          let _input = input;
+          let _init = { ...init };
+
+          _input = "/test2";
+
+          return Reflect.apply(target, thisArg, [_input, _init, ...argArray]);
+        },
+      });
+    </script>
+
+    <script>
+      fetch("/test", {
+        headers: {
+          foo: "foo",
+        },
+      });
+    </script>
+  </body>
+</html>

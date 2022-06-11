@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "i": "yarn add --verbose ./life-cycle-scripts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "life-cycle-scripts": "file:life-cycle-scripts"
+    "life-cycle-scripts": "./life-cycle-scripts"
   }
 }
