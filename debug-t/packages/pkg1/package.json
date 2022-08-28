@@ -1,0 +1,12 @@
+{
+  "name": "debug-t-pkg1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "uglifyjs --compress --mangle --source-map -o index.js -- src/index.js"
+  },
+  "dependencies": {
+    "uglify-js": "^3.16.3"
+  }
+}

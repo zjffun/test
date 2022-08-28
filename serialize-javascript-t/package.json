@@ -1,0 +1,9 @@
+{
+  "name": "serialize-javascript-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "serialize-javascript": "^6.0.0"
+  }
+}

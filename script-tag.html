@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script id="json-ok" type="application/json">
+      {
+        "foo": "\u003C/script>",
+        "bar": ""
+      }
+    </script>
+    <!-- 
+      Uncaught SyntaxError: Bad escaped character in JSON at position 26
+      \x3C is not valid [JSON](https://www.json.org/json-en.html)
+    -->
+    <script id="json-fail1" type="application/json">
+      {
+        "foo": "\x3C/script>",
+        "bar": ""
+      }
+    </script>
+    <script id="json-fail2" type="application/json">
+      {
+        "foo": "</script>",
+        "bar": ""
+      }
+    </script>
+    <script>
+      var jsonOk = JSON.parse(document.getElementById("json-ok").textContent);
+      console.log(jsonOk);
+      var jsonFail1 = JSON.parse(document.getElementById("json-fail1").textContent);
+      console.log(jsonFail1);
+      var jsonFail2 = JSON.parse(document.getElementById("json-fail2").textContent);
+      console.log(jsonFail2);
+    </script>
+  </body>
+</html>

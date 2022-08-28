@@ -1,0 +1,1 @@
+const foo=(...o)=>(console.log(o),o);export{foo};
