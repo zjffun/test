@@ -1,0 +1,15 @@
+{
+  "name": "gulp-typescript-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jufeng Zhang",
+  "license": "MIT",
+  "scripts": {
+    "build": "gulp scripts"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "typescript": "^4.8.3"
+  }
+}
