@@ -1,0 +1,10 @@
+{
+  "name": "pkg2-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jufeng Zhang",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo pkg2"
+  }
+}

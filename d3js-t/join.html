@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module">
+      import * as d3 from "https://unpkg.com/d3?module";
+
+      const width = document.body.clientWidth;
+      const height = 500;
+
+      const svg = d3
+        .create("svg")
+        .attr("viewBox", [0, 0, width, height])
+        .style("font", "10px sans-serif");
+
+      window.update = (links = [{ id: 1 }]) => {
+        svg
+          .selectAll(".relation-link")
+          .data(links, (d) => d.id)
+          .join(
+            (enter) => {
+              console.log("enter", enter);
+
+              const group = enter.append("g").attr("class", "relation-link");
+
+              group
+                .append("path")
+                .attr("fill", "none")
+                .attr("stroke-width", 1)
+                .style("opacity", 0.15);
+
+              const options = group.append("foreignObject");
+
+              return group;
+            },
+            (update) => {
+              console.log("update", update);
+              update.select("path").attr("d", "M 0 0 L 100 100");
+
+              return update;
+            },
+            (exit) => {
+              console.log("exit", exit);
+              return exit.remove();
+            }
+          );
+      };
+
+      document.body.appendChild(svg.node());
+    </script>
+  </body>
+</html>

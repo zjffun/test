@@ -1,0 +1,16 @@
+{
+  "name": "lerna-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jufeng Zhang",
+  "license": "MIT",
+  "scripts": {
+    "build": "lerna run build"
+  },
+  "dependencies": {
+    "lerna": "^5.5.4"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
