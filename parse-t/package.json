@@ -1,0 +1,10 @@
+{
+  "name": "parse-t",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "node-source-walk": "^6.0.2",
+    "parse5": "^7.1.2"
+  }
+}

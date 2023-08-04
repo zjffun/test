@@ -6,11 +6,17 @@ const server = http.createServer(function (req, res) {
   switch (req.url) {
     case "/":
       res.write(`
+        <script src="/cache-control-no-store"></script>
         <script>
-        fetch('/cache-control')
-        fetch('/last-modified')
+          fetch('/cache-control')
+          fetch('/last-modified')
         </script>
       `);
+      break;
+    
+    case "/cache-control-no-store":
+      res.setHeader("Cache-Control", "no-store");
+      res.write(Date.now().toString());
       break;
 
     case "/cache-control":
