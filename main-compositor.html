@@ -1,0 +1,24 @@
+<style>
+  .box {
+    width: 100px;
+    height: 2000px;
+    background: linear-gradient(lightcoral 0%, lightblue 100%);
+  }
+</style>
+<div class="box"></div>
+<script>
+  window.addEventListener("scroll", () => {
+    console.log("scroll");
+  });
+  window.addEventListener("click", () => {
+    console.log("click");
+  });
+  setTimeout(() => {
+    let i = 0;
+
+    const date = Date.now();
+    while (date + 10000 > Date.now()) {
+      i++;
+    }
+  }, 1000);
+</script>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="form" action="">
+      <input name="test" type="text" />
+      <input name="test" type="radio" value="foo" />
+      <input type="radio" />
+      <input type="radio" />
+      <my-input></my-input>
+      <button>submit</button>
+    </form>
+
+    <!-- <my-input form="form2"></my-input>
+    <form id="form2" action=""></form> -->
+    <button onclick="getFormData()">get form data</button>
+    <script>
+      console.log("form-item-t.html:21", form.elements);
+      // console.log("form-item-t.html:23", form2.elements);
+
+      function getFormData() {
+        const form = document.querySelector("form");
+        const formData = new FormData(form);
+        console.log([...formData.entries()]);
+      }
+
+      class MyInput extends HTMLElement {
+        static formAssociated = true;
+        #internals;
+        #shadowRoot;
+        constructor() {
+          super();
+          this.#internals = this.attachInternals();
+          this.#shadowRoot = this.attachShadow({
+            mode: "closed",
+            delegatesFocus: true,
+          });
+          this.#shadowRoot.innerHTML = "<input autofocus>";
+          const input = this.#shadowRoot.querySelector("input");
+          input.addEventListener("change", () => {
+            this.#internals.setFormValue(input.value);
+          });
+        }
+      }
+      customElements.define("my-input", MyInput);
+    </script>
+  </body>
+</html>
