@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>video-capture-compare</title>
+  <style>
+    .form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+
+    .compare-container {
+      position: relative;
+      cursor: ew-resize;
+      width: 100%;
+    }
+
+    .compare-container video,
+    .compare-container img {
+      display: block;
+      width: 100%;
+    }
+
+    .compare-container__video,
+    .compare-container__img {
+      width: 100%;
+    }
+
+    .compare-container__img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      clip-path: polygon(var(--percent, 0) 0, 100% 0, 100% 100%, var(--percent, 0) 100%);
+    }
+
+    .compare-container__line {
+      position: absolute;
+      top: 0;
+      left: var(--percent, 0);
+      height: 100%;
+      width: 1px;
+      background: red;
+    }
+
+    .compare-container__line::before {
+      position: absolute;
+      right: 1em;
+      content: "video"
+    }
+
+    .compare-container__line::after {
+      position: absolute;
+      left: 1em;
+      content: "img"
+    }
+
+    .compare-container__cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Video Capture Compare</h1>
+  <div class="form">
+    <label>
+      <span>Video:</span>
+      <input type="file" id="videoInput">
+    </label>
+
+    <label>
+      <span>Second:</span>
+      <input type="text" id="secondInput" value="0">
+    </label>
+
+    <label>
+      <span>Type:</span>
+      <select id="typeSelect" value="image/jpeg">
+        <option value="image/jpeg">image/jpeg</option>
+        <option value="image/png">image/png</option>
+      </select>
+    </label>
+
+    <label>
+      <span>Quality:</span>
+      <input type="number" id="qualityInput" value="1">
+    </label>
+
+    <label>
+      <span>Color space:</span>
+      <select id="colorSpaceSelect" value="srgb">
+        <option value="srgb">srgb</option>
+        <option value="display-p3">display-p3</option>
+      </select>
+    </label>
+
+    <label>
+      <!-- ffmpeg -ss 00:00:00 -i xxx.mp4 -frames:v 1 xxx.jpg -->
+      <span>Custom image:</span>
+      <input type="file" id="customImageInput">
+    </label>
+  </div>
+
+  <div class="compare-container">
+    <div class="compare-container__video">
+      <video id="video"></video>
+    </div>
+    <div class="compare-container__img">
+      <img id="img" />
+    </div>
+    <div class="compare-container__line"></div>
+    <div class="compare-container__cover"></div>
+  </div>
+
+  <script>
+    const videoInput = document.getElementById('videoInput');
+    const secondInput = document.getElementById('secondInput');
+    const typeSelect = document.getElementById('typeSelect');
+    const qualityInput = document.getElementById('qualityInput');
+    const colorSpaceSelect = document.getElementById('colorSpaceSelect');
+    const customImageInput = document.getElementById('customImageInput');
+
+    const video = document.getElementById('video');
+    const img = document.getElementById('img');
+    const compareContainer = document.querySelector('.compare-container');
+    const compareCover = document.querySelector('.compare-container__cover');
+
+    function capture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d', { colorSpace: colorSpaceSelect.value });
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const dataURL = canvas.toDataURL(typeSelect.value, Number(qualityInput.value));
+      img.src = dataURL;
+
+      customImageInput.value = null;
+    }
+
+    videoInput.addEventListener('change', function () {
+      const file = this.files[0];
+      const url = URL.createObjectURL(file);
+
+      video.addEventListener('loadeddata', function () {
+        video.addEventListener('seeked', capture, {
+          once: true,
+        });
+
+        video.currentTime = secondInput.value;
+      }, {
+        once: true,
+      });
+
+      video.src = url;
+    });
+
+    secondInput.addEventListener('input', function () {
+      const second = this.value;
+
+      video.addEventListener('seeked', capture, {
+        once: true,
+      });
+
+      video.currentTime = second;
+    });
+
+    typeSelect.addEventListener('change', function () {
+      capture();
+    });
+
+    qualityInput.addEventListener('input', function () {
+      capture();
+    });
+
+    colorSpaceSelect.addEventListener('change', function () {
+      capture();
+    });
+
+    customImageInput.addEventListener('change', function () {
+      const file = this.files[0];
+      const url = URL.createObjectURL(file);
+
+      img.src = url;
+    });
+
+    compareCover.addEventListener('mousemove', function () {
+      const width = this.offsetWidth;
+      const x = event.offsetX;
+      const percent = x / width;
+
+      compareContainer.style.setProperty('--percent', `${percent * 100}%`);
+    });
+  </script>
+</body>
+
+</html>
