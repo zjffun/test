@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page1</title>
+</head>
+
+<body>
+  <button id="openPage2">open page2</button>
+  <button id="logOpenedPage2">log opened page2</button>
+  <button id="postMessageToChildPage2">post message to child page2</button>
+  <button id="postMessageToOpenedPage2">post message to opened page2</button>
+
+  <hr>
+
+  <iframe id="childPage2" src="./page2.html" frameborder="1"></iframe>
+
+  <script>
+    const openPage2 = document.getElementById('openPage2');
+    const postMessageToChildPage2 = document.getElementById('postMessageToChildPage2');
+    const postMessageToOpenedPage2 = document.getElementById('postMessageToOpenedPage2');
+    const logOpenedPage2 = document.getElementById('logOpenedPage2');
+
+    let openedPage2 = null;
+
+    openPage2.addEventListener('click', () => {
+      openedPage2 = window.open('./page2.html');
+    });
+
+    logOpenedPage2.addEventListener('click', () => {
+      console.log('openedPage2', openedPage2);
+    });
+
+    postMessageToChildPage2.addEventListener('click', () => {
+      document.getElementById('childPage2').contentWindow.postMessage('hello child page2', '*');
+    });
+
+    postMessageToOpenedPage2.addEventListener('click', () => {
+      openedPage2.postMessage('hello opened page2', '*');
+    });
+
+    window.addEventListener('message', (event) => {
+      console.log('page1 received data:', event.data);
+    });
+  </script>
+</body>
+
+</html>

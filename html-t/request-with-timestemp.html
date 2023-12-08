@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    setInterval(() => {
+      // can't use chrome devtools override content
+      // because wildcard (asterisk) is not supported
+      const url = `./test?t=${Date.now()}`;
+      fetch(url).then(res => res.text()).then(res => {
+        console.log(res);
+      });
+    }, 1000);
+  </script>
+</body>
+
+</html>

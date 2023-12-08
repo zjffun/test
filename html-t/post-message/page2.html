@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page1</title>
+</head>
+
+<body>
+  <button id="postMessageToParentPage1">post message to parent page1</button>
+  <button id="postMessageToOpenerPage1">post message to opener page1</button>
+  <button id="gotoBaidu">goto baidu</button>
+  <script>
+    const postMessageToParentPage1 = document.getElementById('postMessageToParentPage1');
+    const postMessageToOpenerPage1 = document.getElementById('postMessageToOpenerPage1');
+    const gotoBaidu = document.getElementById('gotoBaidu');
+
+    postMessageToParentPage1.addEventListener('click', () => {
+      window.parent.postMessage('hello parent page1', '*');
+    });
+
+    postMessageToOpenerPage1.addEventListener('click', () => {
+      window.opener.postMessage('hello opener page1', '*');
+    });
+
+    gotoBaidu.addEventListener('click', () => {
+      window.location.href = 'https://www.baidu.com';
+    });
+
+    window.addEventListener('message', (event) => {
+      console.log('page2 received data:', event.data);
+    });
+  </script>
+</body>
+
+</html>
