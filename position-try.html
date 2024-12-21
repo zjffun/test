@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 2000px;
+      }
+
+      .anchor {
+        anchor-name: --anchor1;
+        margin-left: -50px;
+        width: 100px;
+        height: 100px;
+        background-color: aqua;
+      }
+
+      .popover {
+        position: fixed;
+        position-anchor: --anchor1;
+        top: anchor(bottom);
+        /* position-area: bottom span-all; */
+        position-try: most-height flip-block;
+
+        width: 100px;
+        height: 100px;
+        background-color: violet;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="anchor"></div>
+    <div class="popover"></div>
+  </body>
+</html>
