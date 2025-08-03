@@ -1,0 +1,8 @@
+@font-face {
+  font-family: test-font;
+  src: url("./Florilane Cardillac.ttf");
+}
+
+div {
+  background: #aaa;
+}

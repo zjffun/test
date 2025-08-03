@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./index.css"> -->
+  </head>
+  <body>
+    <div style="font-family: test-font">outer</div>
+    <script>
+      // Can not use @font-face in shadow DOM
+      // See https://issues.chromium.org/issues/41085401
+      class MyElement extends HTMLElement {
+        constructor() {
+          super();
+          const shadow = this.attachShadow({ mode: "open" });
+          const div = document.createElement("div");
+          div.textContent = "web component";
+          div.style.fontFamily = "test-font";
+          shadow.appendChild(div);
+
+          const style = document.createElement("style");
+          style.textContent = `
+            @import url("./index.css");
+            @font-face {
+              font-family: test-font;
+              src: url("./Florilane Cardillac.ttf");
+            }
+          `;
+          shadow.appendChild(style);
+        }
+      }
+
+      customElements.define("my-element", MyElement);
+
+      const myElement = document.createElement("my-element");
+      document.body.appendChild(myElement);
+
+      // const style = document.createElement("style");
+      // style.textContent = `
+      //     @font-face {
+      //       font-family: test-font;
+      //       src: url("./Florilane Cardillac.ttf");
+      //     }
+      //   `;
+      // document.body.appendChild(style);
+    </script>
+  </body>
+</html>
