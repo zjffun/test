@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        width: 100%;
+        height: 100vh;
+        overflow: scroll;
+      }
+      .box1 {
+        width: 100%;
+        height: 130vh;
+      }
+      .box2 {
+        width: 100%;
+        height: 10vh;
+        background-color: gray;
+      }
+      .box3 {
+        width: 100%;
+        height: 50vh;
+        background-color: lightblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box1">1</div>
+      <div class="box2">2</div>
+      <div class="box3">3</div>
+    </div>
+    <script>
+      const options = {
+        // If the root is null, then the bounds of the actual document viewport are used.
+        root: null,
+        rootMargin: "0px",
+        scrollMargin: "0px",
+        threshold: 1.0,
+      };
+
+      const reportObserver = new IntersectionObserver((d) => {
+        console.log("zjflog", d);
+      }, options);
+
+      reportObserver?.observe?.(document.querySelector(".box2"));
+    </script>
+  </body>
+</html>
