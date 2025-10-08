@@ -1,0 +1,11 @@
+virtualenv -p python3.9 myenv
+
+source myenv/bin/activate
+
+---
+
+pip3 install pytesseract
+
+brew install tesseract
+
+
